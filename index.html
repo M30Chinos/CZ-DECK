@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONTRALUZ® — Dark Luxury Spirits</title>
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --black:    #050505;
+  --char:     #111111;
+  --smoke:    #1E1E1E;
+  --dim:      #2A2A2A;
+  --mute:     #555555;
+  --silver:   #AAAAAA;
+  --white:    #F5F0E8;
+  --gold:     #C9A84C;   /* SOLO para 11:11 */
+  --gold-dim: #8A6F30;
+  --cyan:     #00C2A0;   /* Acento principal Contraluz */
+  --cyan-dim: #007A65;
+  --sakura:   #D4788A;
+  --sakura-lt:#F0B8C8;
+  --nav-h: 64px;
+  --ease: cubic-bezier(.4,0,.2,1);
+  --slow: cubic-bezier(.2,0,.1,1);
+}
+
+/* ═══════════════════════════════════════════
+   FONTS
+═══════════════════════════════════════════ */
+@font-face {
+  font-family: 'Garaje';
+  src: url('garaje-extracted/Garaje Total - 0703-3503 Var-205TF/Garaje Total - 0703-3503 Var-205TF.ttf') format('truetype');
+  font-weight: 100 900; font-display: swap;
+}
+@font-face {
+  font-family: 'GTAmerica';
+  src: url('gt-america-extracted/GT-America-Condensed-Font/GT-America-Condensed-Thin.otf') format('opentype');
+  font-weight: 100 300; font-display: swap;
+}
+@font-face {
+  font-family: 'Dreaming';
+  src: url('Dreaming in the Moonlight.ttf') format('truetype');
+  font-weight: 400; font-display: swap;
+}
+
+/* ═══════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--black);color:var(--white);font-family:'GTAmerica','Garaje',system-ui,sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
+.display{font-family:'Garaje','Bebas Neue',system-ui,sans-serif;font-weight:700;letter-spacing:-.02em;line-height:.9;text-transform:uppercase;}
+.serif-accent{font-family:'Dreaming',Georgia,serif;font-weight:400;font-style:italic;}
+.label{font-family:'GTAmerica','Garaje',system-ui,sans-serif;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan) !important;}
+.gold{color:var(--gold)} .cyan{color:var(--cyan)} .sakura{color:var(--sakura)} .mute{color:var(--silver)}
+
+/* ═══════════════════════════════════════════
+   AGE GATE
+═══════════════════════════════════════════ */
+#age-gate{position:fixed;inset:0;z-index:9999;background:var(--black);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2rem;text-align:center;padding:2rem;}
+#age-gate .ag-logo{width:120px;opacity:.9;filter:brightness(0) invert(1);}
+#age-gate h1{font-size:clamp(2rem,8vw,5rem)}
+#age-gate p:not(.label){color:var(--silver);font-size:.9rem;max-width:340px}
+.ag-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn-cyan{padding:.8rem 2.4rem;border:1px solid var(--cyan);color:var(--cyan);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;transition:background .25s,color .25s;}
+.btn-cyan:hover{background:var(--cyan);color:var(--black)}
+.btn-ghost{padding:.8rem 2.4rem;border:1px solid var(--dim);color:var(--silver);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;}
+#age-gate.hidden{display:none}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:transparent;transition:background .4s,border-color .4s;border-bottom:1px solid transparent;}
+#nav.scrolled{background:rgba(5,5,5,.92);border-color:rgba(0,194,160,.12);backdrop-filter:blur(12px);}
+.nav-logo{height:28px;filter:brightness(0) invert(1);opacity:.9;cursor:pointer;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white);opacity:.7;transition:opacity .2s,color .2s;padding-bottom:2px;border-bottom:1px solid transparent;}
+.nav-links a:hover{opacity:1;color:var(--cyan);border-color:var(--cyan)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+#lang-btn{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);opacity:.8;transition:opacity .2s;}
+#lang-btn:hover{opacity:1}
+#hamburger{display:none;flex-direction:column;gap:5px;padding:4px;}
+#hamburger span{display:block;width:22px;height:1px;background:var(--white);transition:transform .3s,opacity .3s;}
+#mobile-drawer{display:none;position:fixed;inset:0;z-index:99;background:rgba(5,5,5,.97);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;backdrop-filter:blur(20px);}
+#mobile-drawer.open{display:flex}
+#mobile-drawer a{font-family:'Garaje',system-ui,sans-serif;font-size:clamp(1.5rem,6vw,2.5rem);letter-spacing:.05em;text-transform:uppercase;color:var(--white);opacity:.6;transition:opacity .2s,color .2s;}
+#mobile-drawer a:hover{opacity:1;color:var(--cyan)}
+#drawer-close{position:absolute;top:1.5rem;right:2rem;font-size:1.5rem;color:var(--silver);}
+@media(max-width:900px){.nav-links{display:none}#hamburger{display:flex}}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero{position:relative;height:100svh;min-height:600px;display:flex;align-items:flex-end;padding:0 2rem 5rem;overflow:hidden;}
+#hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;}
+#hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,#050505 0%,transparent 60%);}
+.hero-content{position:relative;z-index:2;max-width:700px;}
+.hero-content .label{margin-bottom:1rem}
+.hero-content h1{font-size:clamp(3.5rem,10vw,8rem);margin-bottom:1.5rem;}
+.hero-content p:not(.label){font-size:clamp(.9rem,2vw,1.1rem);color:var(--silver);max-width:480px;margin-bottom:2rem;}
+.hero-cta{display:inline-flex;align-items:center;gap:.75rem;padding:.9rem 2rem;border:1px solid var(--cyan);color:var(--cyan);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;transition:background .25s,color .25s;}
+.hero-cta:hover{background:var(--cyan);color:var(--black)}
+.scroll-hint{position:absolute;bottom:2rem;right:2rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+.scroll-hint span{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);writing-mode:vertical-rl;}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--cyan));animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.2)}}
+
+/* ═══════════════════════════════════════════
+   SECTION COMMONS
+═══════════════════════════════════════════ */
+section{padding:7rem 2rem}
+.section-header{text-align:center;margin-bottom:5rem;}
+.section-header .label{margin-bottom:1.5rem}
+.section-header h2{font-size:clamp(2.5rem,7vw,5rem);margin-bottom:1rem;}
+.section-header p:not(.label){color:var(--silver);max-width:560px;margin:0 auto;font-size:.95rem;}
+.divider{width:40px;height:1px;background:var(--cyan);margin:2rem auto;}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s var(--slow),transform .8s var(--slow);}
+.reveal.visible{opacity:1;transform:none}
+
+/* ═══════════════════════════════════════════
+   SOMBRILLA — BRAND + PRODUCTS
+═══════════════════════════════════════════ */
+#sombrilla{background:var(--black)}
+.brand-pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;margin-bottom:7rem;}
+.pillar{background:var(--char);padding:2.5rem 2rem;border-top:1px solid var(--dim);transition:border-color .3s;}
+.pillar:hover{border-color:var(--cyan)}
+.pillar-icon{font-size:1.4rem;margin-bottom:1rem;}
+.pillar h3{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem;}
+.pillar p:not(.label){font-size:.85rem;color:var(--silver)}
+
+/* Products */
+.products-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:3rem;flex-wrap:wrap;gap:1rem;}
+.products-heading h2{font-size:clamp(2rem,5vw,3.5rem)}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+@media(max-width:768px){.products-grid{grid-template-columns:1fr}}
+
+/* ── PRODUCT CARD: stacked layout, no overlap ── */
+.product-card{
+  background:var(--char);
+  cursor:pointer;
+  perspective:900px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+/* thin cyan top accent on hover */
+.product-card::after{content:'';display:block;height:2px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease);}
+.product-card:hover::after{transform:scaleX(1)}
+
+/* bottle zone — full dark bg, bottle floats centered */
+.bottle-wrap{
+  position:relative;
+  height:380px;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  transition:background .4s;
+}
+/* subtle vignette at bottom edge only so bottle doesn't bleed into info */
+.bottle-wrap::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:60px;
+  background:linear-gradient(to top,var(--char),transparent);
+  pointer-events:none;
+}
+.bottle-wrap img{
+  height:78%;
+  width:auto;
+  object-fit:contain;
+  transition:transform .6s var(--slow),filter .4s;
+  filter:drop-shadow(0 16px 40px rgba(0,0,0,.85));
+  position:relative;z-index:2;
+  transform-style:preserve-3d;will-change:transform;
+}
+.product-card:hover .bottle-wrap img{filter:drop-shadow(0 20px 50px rgba(0,0,0,.75));}
+
+/* info zone — sits BELOW bottle, always clean */
+.product-info{
+  background:var(--char);
+  border-top:1px solid var(--dim);
+  padding:1.5rem 1.75rem 2rem;
+  flex:1;
+}
+.product-tag{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem;}
+.product-name{font-family:'Garaje',system-ui,sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;text-transform:uppercase;margin-bottom:.4rem;color:var(--white);}
+.product-price{font-size:.8rem;color:var(--silver);margin-bottom:1.2rem;}
+.product-actions{display:flex;gap:.75rem;flex-wrap:wrap;}
+.btn-sm{padding:.5rem 1.2rem;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;border:1px solid;transition:background .2s,color .2s;}
+.btn-sm.cyan-btn{border-color:var(--cyan);color:var(--cyan)}
+.btn-sm.cyan-btn:hover{background:var(--cyan);color:var(--black)}
+.btn-sm.ghost{border-color:var(--dim);color:var(--silver)}
+.btn-sm.ghost:hover{border-color:var(--silver)}
+
+/* Bottle glow per card */
+.card-mezcal .bottle-wrap{background:radial-gradient(ellipse 70% 50% at 50% 80%,rgba(0,194,160,.07) 0%,var(--char) 70%);}
+.card-tequila .bottle-wrap{background:radial-gradient(ellipse 70% 50% at 50% 80%,rgba(0,194,160,.05) 0%,var(--char) 70%);}
+.card-1111 .bottle-wrap{background:radial-gradient(ellipse 70% 50% at 50% 80%,rgba(212,120,138,.1) 0%,var(--char) 70%);}
+
+/* ═══════════════════════════════════════════
+   TASTING MODAL
+═══════════════════════════════════════════ */
+#modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(5,5,5,.9);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;}
+#modal-overlay.open{display:flex}
+.modal-box{background:var(--char);border:1px solid var(--dim);max-width:700px;width:100%;max-height:85vh;overflow-y:auto;position:relative;padding:3rem;}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;font-size:1.2rem;color:var(--mute);transition:color .2s;}
+.modal-close:hover{color:var(--white)}
+.modal-label{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:.75rem;}
+.modal-title{font-size:clamp(1.5rem,4vw,2.5rem);font-family:'Garaje',system-ui,sans-serif;text-transform:uppercase;margin-bottom:2rem;}
+.modal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.5rem;margin-bottom:2rem;}
+.modal-attr h4{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:.3rem;}
+.modal-attr p{font-size:.85rem;color:var(--silver)}
+.modal-notes{border-top:1px solid var(--dim);padding-top:1.5rem;color:var(--silver);font-size:.9rem;line-height:1.7;}
+
+/* ═══════════════════════════════════════════
+   EVENT MODAL
+═══════════════════════════════════════════ */
+#event-modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(5,5,5,.92);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:2rem;}
+#event-modal-overlay.open{display:flex}
+.event-modal-box{background:var(--char);border:1px solid var(--dim);max-width:640px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
+.event-modal-cover{width:100%;height:220px;object-fit:cover;filter:grayscale(.3) brightness(.8);}
+.event-modal-body{padding:2.5rem;}
+.event-modal-close{position:absolute;top:1rem;right:1rem;font-size:1.2rem;color:var(--white);background:rgba(5,5,5,.7);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.event-modal-close:hover{background:var(--cyan);color:var(--black)}
+.event-modal-date{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem;}
+.event-modal-title{font-family:'Garaje',system-ui,sans-serif;font-size:clamp(1.5rem,4vw,2.2rem);text-transform:uppercase;margin-bottom:1rem;}
+.event-modal-desc{font-size:.88rem;color:var(--silver);line-height:1.8;margin-bottom:2rem;}
+.event-modal-details{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;padding:1.5rem;background:var(--smoke);}
+.event-modal-detail h4{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:.25rem;}
+.event-modal-detail p{font-size:.85rem;color:var(--white);}
+.event-modal-cta{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.8rem;border:1px solid var(--cyan);color:var(--cyan);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;transition:background .25s,color .25s;}
+.event-modal-cta:hover{background:var(--cyan);color:var(--black)}
+
+/* ═══════════════════════════════════════════
+   PORTAL 11:11 — SOLO ESTA SECCIÓN USA DORADO
+═══════════════════════════════════════════ */
+#portal{position:relative;background:var(--black);overflow:hidden;padding:7rem 2rem;text-align:center;}
+.portal-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(201,168,76,.07) 0%,transparent 70%);pointer-events:none;}
+
+.petal{position:absolute;pointer-events:none;animation:fall linear infinite;will-change:transform;}
+.petal svg{fill:var(--sakura-lt);opacity:.25;}
+@keyframes fall{0%{transform:translateY(-60px) translateX(0) rotate(0deg);opacity:0}10%{opacity:.3}90%{opacity:.15}100%{transform:translateY(110vh) translateX(50px) rotate(720deg);opacity:0}}
+
+.portal-kanji{font-family:'Dreaming',Georgia,serif;font-size:clamp(4rem,15vw,12rem);color:var(--gold);opacity:.06;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;user-select:none;}
+.portal-content{position:relative;z-index:2}
+.portal-eyebrow{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;opacity:.8;}
+.portal-title{font-size:clamp(3rem,10vw,7rem);margin-bottom:1rem;}
+.portal-subtitle{font-family:'Dreaming',serif;font-size:clamp(1rem,3vw,1.5rem);color:var(--sakura-lt);margin-bottom:3rem;opacity:.8;}
+
+/* Countdown — dorado */
+.countdown{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin:3rem 0;}
+.cd-unit{display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+.cd-num{font-family:'Garaje',system-ui,sans-serif;font-size:clamp(3rem,8vw,5rem);font-weight:700;color:var(--gold);line-height:1;min-width:80px;text-align:center;}
+.cd-label{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.7;}
+.cd-sep{font-family:'Garaje',system-ui,sans-serif;font-size:clamp(2rem,6vw,4rem);color:var(--gold);opacity:.3;align-self:center;padding-bottom:.5rem;}
+
+/* FOMO bar */
+.fomo-bar{display:inline-flex;align-items:center;gap:.75rem;padding:.75rem 1.5rem;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);margin-bottom:2rem;}
+.fomo-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.fomo-text{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);opacity:.8;}
+#stock-num{font-weight:700;color:var(--gold)}
+.portal-note{font-size:.75rem;color:var(--mute);margin-top:2rem;}
+
+/* portal stats — dorado */
+.portal-stats{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-top:4rem;border-top:1px solid rgba(201,168,76,.15);padding-top:3rem;}
+.p-stat h3{font-size:clamp(1.5rem,4vw,2.5rem);color:var(--gold)}
+.p-stat p{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mute)}
+
+/* ═══════════════════════════════════════════
+   RITUAL SHOP
+═══════════════════════════════════════════ */
+#shop{background:var(--char)}
+.kits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;}
+.kit-card{background:var(--smoke);padding:2.5rem;border-top:2px solid transparent;transition:border-color .3s,transform .3s;cursor:pointer;}
+.kit-card:hover{border-color:var(--cyan);transform:translateY(-4px);}
+.kit-badge{display:inline-block;padding:.25rem .75rem;border:1px solid var(--cyan);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:1.5rem;}
+.kit-title{font-size:clamp(1.2rem,3vw,1.8rem);font-family:'Garaje',system-ui,sans-serif;text-transform:uppercase;margin-bottom:.75rem;}
+.kit-desc{font-size:.85rem;color:var(--silver);margin-bottom:1.5rem;line-height:1.6;}
+.kit-items{list-style:none;margin-bottom:2rem;}
+.kit-items li{padding:.4rem 0;font-size:.8rem;color:var(--silver);border-bottom:1px solid var(--dim);display:flex;align-items:center;gap:.5rem;}
+.kit-items li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--cyan);flex-shrink:0;}
+.kit-price{font-family:'Garaje',system-ui,sans-serif;font-size:1.8rem;color:var(--cyan);margin-bottom:1rem;}
+.kit-price span{font-size:.7rem;letter-spacing:.1em;color:var(--mute);font-family:inherit;}
+
+.shop-singles{margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;}
+.shop-item{background:var(--dim);padding:1.5rem;display:flex;align-items:center;gap:1.2rem;transition:background .25s;}
+.shop-item:hover{background:var(--smoke)}
+.shop-item-img{width:50px;height:80px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));flex-shrink:0;}
+.shop-item-info h4{font-size:.85rem;font-family:'Garaje',system-ui,sans-serif;text-transform:uppercase;margin-bottom:.25rem;}
+.shop-item-info .price{color:var(--cyan);font-size:.9rem}
+.shop-item-info .stock-label{font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-top:.25rem;}
+
+/* ═══════════════════════════════════════════
+   COMUNIDAD
+═══════════════════════════════════════════ */
+#comunidad{background:var(--black)}
+.partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:6rem;}
+@media(max-width:768px){.partner-grid{grid-template-columns:1fr}}
+.partner-img-wrap{position:relative;overflow:hidden;}
+.partner-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--black));}
+.partner-img-wrap img{width:100%;height:500px;object-fit:cover;filter:grayscale(.3) contrast(1.1);transition:filter .4s;}
+.partner-img-wrap:hover img{filter:grayscale(0) contrast(1)}
+.partner-text .label{margin-bottom:1rem}
+.partner-text h2{font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1rem;}
+.partner-text p:not(.label){color:var(--silver);font-size:.9rem;line-height:1.8;margin-bottom:2rem;}
+.partner-quote{font-family:'Dreaming',serif;font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--cyan);border-left:2px solid var(--cyan);padding-left:1.5rem;margin-bottom:2rem;}
+
+/* Events */
+.events-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;}
+.event-card{background:var(--char);overflow:hidden;transition:transform .3s;cursor:pointer;}
+.event-card:hover{transform:translateY(-4px)}
+.event-img{width:100%;height:200px;object-fit:cover;filter:grayscale(.2);transition:filter .3s;}
+.event-card:hover .event-img{filter:grayscale(0)}
+.event-body{padding:1.5rem}
+.event-date{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem;}
+.event-title{font-family:'Garaje',system-ui,sans-serif;font-size:1.1rem;text-transform:uppercase;margin-bottom:.5rem;}
+.event-loc{font-size:.8rem;color:var(--mute)}
+.event-card-cta{display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);opacity:.7;transition:opacity .2s;}
+.event-card:hover .event-card-cta{opacity:1}
+
+/* Playlists */
+.playlist-row{margin-top:4rem;display:flex;gap:1rem;overflow-x:auto;padding-bottom:1rem;scrollbar-width:none;}
+.playlist-row::-webkit-scrollbar{display:none}
+.playlist-pill{flex-shrink:0;display:flex;align-items:center;gap:.75rem;padding:.75rem 1.25rem;background:var(--char);border:1px solid var(--dim);transition:border-color .25s,background .25s;white-space:nowrap;cursor:pointer;text-decoration:none;color:inherit;}
+.playlist-pill:hover{border-color:var(--cyan);background:rgba(0,194,160,.04)}
+.playlist-pill .play-icon{width:28px;height:28px;border:1px solid var(--cyan);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--cyan);transition:background .2s;}
+.playlist-pill:hover .play-icon{background:var(--cyan);color:var(--black)}
+.playlist-pill .pill-info{display:flex;flex-direction:column;gap:.15rem;}
+.playlist-pill .pill-name{font-size:.75rem;color:var(--white);}
+.playlist-pill .pill-tracks{font-size:.55rem;letter-spacing:.1em;color:var(--mute);}
+
+/* ═══════════════════════════════════════════
+   SOPORTE
+═══════════════════════════════════════════ */
+#soporte{background:var(--char)}
+.soporte-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
+@media(max-width:768px){.soporte-grid{grid-template-columns:1fr}}
+
+.faq-item{border-bottom:1px solid var(--dim);}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 0;text-align:left;font-size:.9rem;color:var(--white);transition:color .2s;}
+.faq-q:hover{color:var(--cyan)}
+.faq-q .faq-arrow{font-size:.8rem;color:var(--cyan);transition:transform .3s;flex-shrink:0;}
+.faq-q.open .faq-arrow{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease),padding .3s;font-size:.85rem;color:var(--silver);line-height:1.7;}
+.faq-a.open{max-height:200px;padding-bottom:1.25rem}
+
+.garantia-card{background:var(--smoke);padding:2.5rem;border-top:2px solid var(--cyan);}
+.garantia-card h3{font-size:1.3rem;font-family:'Garaje',system-ui,sans-serif;text-transform:uppercase;margin-bottom:1rem;}
+.garantia-card p:not(.label){font-size:.85rem;color:var(--silver);line-height:1.7;margin-bottom:1.5rem}
+.garantia-steps{list-style:none;counter-reset:step}
+.garantia-steps li{padding:.6rem 0;font-size:.8rem;color:var(--silver);border-bottom:1px solid var(--dim);counter-increment:step;display:flex;gap:.75rem;align-items:flex-start;}
+.garantia-steps li::before{content:counter(step,'0'counter(step));color:var(--cyan);font-size:.6rem;letter-spacing:.1em;flex-shrink:0;margin-top:.15rem;}
+
+.contact-links{margin-top:2rem;display:flex;flex-direction:column;gap:.75rem;}
+.contact-link{display:flex;align-items:center;gap:.75rem;font-size:.8rem;color:var(--silver);transition:color .2s;}
+.contact-link:hover{color:var(--cyan)}
+.contact-link .icon{color:var(--cyan);font-size:.9rem}
+
+/* ═══════════════════════════════════════════
+   DUAL ORIGIN
+═══════════════════════════════════════════ */
+#origin{background:var(--smoke);padding:5rem 2rem;}
+.origin-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+@media(max-width:600px){.origin-grid{grid-template-columns:1fr}}
+.origin-side{padding:3rem;position:relative;overflow:hidden;}
+.origin-side::before{content:'';position:absolute;inset:0;opacity:.03;background-size:20px 20px;background-image:radial-gradient(circle,var(--cyan) 1px,transparent 1px);}
+.origin-side:first-child{background:var(--char);border-right:1px solid var(--dim)}
+.origin-tag{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem;}
+.origin-side h3{font-size:clamp(1.5rem,4vw,2.5rem);font-family:'Garaje',system-ui,sans-serif;text-transform:uppercase;margin-bottom:1rem;}
+.origin-side p:not(.label){font-size:.85rem;color:var(--silver);line-height:1.7}
+
+/* ═══════════════════════════════════════════
+   PROCESO
+═══════════════════════════════════════════ */
+#proceso{background:var(--smoke);padding:6rem 2rem}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+@media(max-width:900px){.process-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.process-grid{grid-template-columns:1fr}}
+.process-step{background:var(--char);padding:2rem;border-top:1px solid var(--dim);transition:border-color .3s;}
+.process-step:hover{border-color:var(--cyan)}
+.step-num{font-family:'Dreaming',serif;font-size:2.5rem;color:var(--cyan);opacity:.3;margin-bottom:.75rem;}
+.step-name{font-family:'Garaje',system-ui,sans-serif;font-size:.9rem;text-transform:uppercase;margin-bottom:.4rem;}
+.step-desc{font-size:.78rem;color:var(--mute);line-height:1.6}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer{background:var(--black);border-top:1px solid var(--dim);padding:4rem 2rem 2rem;text-align:center;}
+.footer-logo{height:36px;filter:brightness(0) invert(1);opacity:.5;margin:0 auto 1.5rem;}
+.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;}
+.footer-links a{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mute);transition:color .2s;}
+.footer-links a:hover{color:var(--cyan)}
+.footer-legal{font-size:.65rem;color:var(--mute);max-width:500px;margin:0 auto;line-height:1.6;}
+.footer-social{display:flex;gap:1.5rem;justify-content:center;margin-bottom:2rem;}
+.footer-social a{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--silver);border-bottom:1px solid transparent;transition:color .2s,border-color .2s;}
+.footer-social a:hover{color:var(--cyan);border-color:var(--cyan)}
+
+
+/* MISC */
+.container{max-width:1200px;margin:0 auto}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+/* ═══════════════════════════════════════════
+   HERO — parallax
+═══════════════════════════════════════════ */
+#hero-video{will-change:transform;}
+.hero-content{will-change:transform,opacity;}
+
+/* ═══════════════════════════════════════════
+   LIQUID HERO TRANSITION
+═══════════════════════════════════════════ */
+#liquid-transition{
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:10;pointer-events:none;
+  height:0;overflow:visible;
+  will-change:height,opacity;
+}
+.lt-wave{
+  position:absolute;bottom:100%;left:-5%;
+  width:220%;height:75px;
+  animation:ltWave 3.8s linear infinite;
+}
+.lt-wave .w2{
+  animation:ltWave 5.5s linear infinite reverse;
+}
+@keyframes ltWave{
+  from{transform:translateX(0)}
+  to{transform:translateX(-45.5%)}
+}
+.lt-body{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(0,210,172,.18) 0%,
+    rgba(0,175,138,.42) 20%,
+    rgba(0,105,82,.68)  50%,
+    rgba(0,58,46,.84)   80%,
+    rgba(0,42,34,.88)   100%
+  );
+}
+.lt-body::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,.013) 0px,
+    transparent 3px,
+    transparent 7px
+  );
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════ */
+@media(hover:hover){
+  html,*,*::before,*::after{cursor:none !important}
+}
+#cx-ring{
+  position:fixed;z-index:9998;pointer-events:none;
+  width:22px;height:22px;
+  border:1px solid rgba(0,194,160,.75);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition:width .22s var(--ease),height .22s var(--ease),
+             border-color .22s,background .22s,opacity .3s;
+  will-change:left,top;
+}
+#cx-dot{
+  position:fixed;z-index:9999;pointer-events:none;
+  width:4px;height:4px;background:var(--cyan);
+  border-radius:50%;transform:translate(-50%,-50%);
+  will-change:left,top;transition:opacity .3s;
+}
+#cx-ring.is-hover{
+  width:50px;height:50px;
+  border-color:rgba(0,194,160,.35);
+  background:rgba(0,194,160,.05);
+}
+#cx-ring.is-click{width:14px;height:14px;background:rgba(0,194,160,.18)}
+@media(hover:none){#cx-ring,#cx-dot{display:none}}
+
+/* ═══════════════════════════════════════════
+   MARQUEE TICKER
+═══════════════════════════════════════════ */
+.cz-ticker{
+  background:var(--char);
+  border-top:1px solid var(--dim);
+  border-bottom:1px solid var(--dim);
+  overflow:hidden;padding:.65rem 0;
+}
+.ticker-track{
+  display:inline-block;white-space:nowrap;
+  font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mute);
+  animation:tickerScroll 28s linear infinite;
+}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════════
+   PERMANENT TEAL LIQUID VEIL
+═══════════════════════════════════════════ */
+#teal-veil{
+  position:fixed;inset:0;z-index:3;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,140,110,0.015) 0%,
+      rgba(0,100,78,0.028)  50%,
+      rgba(0,72,56,0.038)   100%
+    );
+  mix-blend-mode:normal;
+}
+
+/* ═══════════════════════════════════════════
+   LIQUID BOTTLE PROGRESS
+═══════════════════════════════════════════ */
+#liquid-progress{
+  position:fixed;right:18px;top:50%;transform:translateY(-50%);
+  z-index:50;width:58px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  pointer-events:none;opacity:0;transition:opacity .7s;
+}
+#liquid-progress.lp-visible{opacity:1}
+#liquid-progress svg{width:58px;overflow:visible;
+  filter:drop-shadow(0 0 10px rgba(0,194,160,.18));}
+#lp-label{font-size:.42rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mute);text-align:center;transition:color .4s;}
+.wave-anim{animation:waveSlide 2.8s linear infinite;}
+@keyframes waveSlide{from{transform:translateX(0)}to{transform:translateX(-50px)}}
+@media(max-width:900px){#liquid-progress{display:none}}
+
+/* ═══════════════════════════════════════════
+   PRODUCTS — STICKY BOTTLE LAYOUT
+═══════════════════════════════════════════ */
+.products-sticky-container{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;align-items:start;
+}
+.sticky-bottle-col{
+  position:sticky;
+  top:calc(var(--nav-h) + 1.5rem);
+  height:calc(100vh - var(--nav-h) - 3rem);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.sticky-bottle-stage{
+  position:relative;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:crosshair;
+}
+#sticky-aura{
+  position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse 70% 55% at 50% 65%,rgba(0,194,160,.07) 0%,transparent 65%);
+  transition:background 1s ease;
+}
+#sticky-bottle-img{
+  height:clamp(260px,46vh,450px);width:auto;object-fit:contain;
+  filter:drop-shadow(0 24px 60px rgba(0,0,0,.85));
+  transition:transform .35s var(--slow),filter .35s,opacity .25s;
+  position:relative;z-index:2;
+  transform-style:preserve-3d;will-change:transform;
+}
+.sticky-bottle-label{
+  position:absolute;bottom:2.5rem;left:0;right:0;
+  text-align:center;z-index:3;pointer-events:none;
+}
+#sticky-label-tag{
+  font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--cyan);display:block;margin-bottom:.3rem;transition:opacity .4s;
+}
+#sticky-label-name{
+  font-family:'Garaje',system-ui,sans-serif;font-size:1.05rem;
+  text-transform:uppercase;color:var(--white);opacity:.55;
+  transition:opacity .4s;
+}
+.sticky-dots{
+  position:absolute;top:2rem;right:2rem;
+  display:flex;flex-direction:column;gap:.65rem;z-index:3;
+}
+.sticky-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--dim);transition:background .4s,transform .4s;
+  cursor:pointer;pointer-events:all;
+}
+.sticky-dot.active{background:var(--cyan);transform:scale(1.6)}
+.products-scroll-col{border-left:1px solid var(--dim);}
+.product-info-block{
+  min-height:78vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:4rem 3.5rem;
+  border-bottom:1px solid var(--dim);
+  opacity:.28;transform:translateX(28px);
+  transition:opacity .65s var(--slow),transform .65s var(--slow);
+  cursor:pointer;
+}
+.product-info-block:hover{background:rgba(255,255,255,.012)}
+.product-info-block.active{opacity:1;transform:translateX(0)}
+.product-info-block .pib-tag{
+  font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:.75rem;
+}
+.product-info-block .pib-name{
+  font-family:'Garaje',system-ui,sans-serif;
+  font-size:clamp(2rem,3.5vw,3rem);font-weight:700;
+  text-transform:uppercase;margin-bottom:.4rem;color:var(--white);
+}
+.product-info-block .pib-price{
+  font-size:.82rem;color:var(--silver);margin-bottom:1.5rem;
+}
+.product-info-block .pib-desc{
+  font-size:.88rem;color:var(--mute);line-height:1.75;
+  margin-bottom:2rem;max-width:360px;
+}
+.product-info-block .pib-cta{
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.65rem 1.6rem;border:1px solid var(--cyan);
+  color:var(--cyan);font-size:.58rem;letter-spacing:.2em;
+  text-transform:uppercase;background:none;font-family:inherit;
+  transition:background .25s,color .25s;width:fit-content;cursor:pointer;
+}
+.product-info-block .pib-cta:hover{background:var(--cyan);color:var(--black)}
+@media(max-width:900px){
+  .products-sticky-container{grid-template-columns:1fr}
+  .sticky-bottle-col{
+    position:relative;top:auto;height:300px;
+    border-bottom:1px solid var(--dim);
+  }
+  .sticky-dots{display:none}
+  .products-scroll-col{border-left:none}
+  .product-info-block{
+    min-height:auto;padding:2.5rem 1.5rem;
+    opacity:1;transform:none;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- AGE GATE -->
+<div id="age-gate">
+  <img class="ag-logo" src="Contraluz_Logotipo_Black.png" alt="CONTRALUZ">
+  <div>
+    <p class="label" data-es="Bebidas alcohólicas" data-en="Alcoholic Beverages">Bebidas alcohólicas</p>
+    <h1 class="display" style="font-size:clamp(1.8rem,6vw,4rem)" data-es="¿Eres mayor de 18 años?" data-en="Are you over 18?">¿Eres mayor de 18 años?</h1>
+  </div>
+  <p data-es="Este sitio contiene contenido sobre bebidas alcohólicas. Por favor confirma tu edad para continuar." data-en="This site contains content about alcoholic beverages. Please confirm your age to continue.">Este sitio contiene contenido sobre bebidas alcohólicas. Por favor confirma tu edad para continuar.</p>
+  <div class="ag-btns">
+    <button class="btn-cyan" onclick="passAgeGate()" data-es="Sí, tengo 18+" data-en="Yes, I'm 18+">Sí, tengo 18+</button>
+    <button class="btn-ghost" onclick="failAgeGate()" data-es="No, soy menor" data-en="No, I'm under 18">No, soy menor</button>
+  </div>
+</div>
+
+
+<!-- NAV -->
+<nav id="nav" role="navigation" aria-label="Navegación principal">
+  <img class="nav-logo" src="Contraluz_Logotipo_Black.png" alt="CONTRALUZ" onclick="scrollTo({top:0,behavior:'smooth'})">
+  <ul class="nav-links">
+    <li><a href="#sombrilla" data-es="SOMBRILLA" data-en="BRAND">SOMBRILLA</a></li>
+    <li><a href="#portal" data-es="PORTAL 11:11" data-en="PORTAL 11:11">PORTAL 11:11</a></li>
+    <li><a href="#shop" data-es="RITUAL SHOP" data-en="RITUAL SHOP">RITUAL SHOP</a></li>
+    <li><a href="#comunidad" data-es="COMUNIDAD" data-en="COMMUNITY">COMUNIDAD</a></li>
+    <li><a href="#soporte" data-es="SOPORTE" data-en="SUPPORT">SOPORTE</a></li>
+  </ul>
+  <div class="nav-right">
+    <button id="lang-btn" onclick="toggleLang()">EN</button>
+    <button id="hamburger" onclick="openDrawer()" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div id="mobile-drawer" role="dialog" aria-modal="true">
+  <button id="drawer-close" onclick="closeDrawer()">✕</button>
+  <a href="#sombrilla" onclick="closeDrawer()" data-es="SOMBRILLA" data-en="BRAND">SOMBRILLA</a>
+  <a href="#portal" onclick="closeDrawer()" data-es="PORTAL 11:11" data-en="PORTAL 11:11">PORTAL 11:11</a>
+  <a href="#shop" onclick="closeDrawer()" data-es="RITUAL SHOP" data-en="RITUAL SHOP">RITUAL SHOP</a>
+  <a href="#comunidad" onclick="closeDrawer()" data-es="COMUNIDAD" data-en="COMMUNITY">COMUNIDAD</a>
+  <a href="#soporte" onclick="closeDrawer()" data-es="SOPORTE" data-en="SUPPORT">SOPORTE</a>
+</div>
+
+<!-- HERO -->
+<section id="hero" aria-label="Hero">
+  <video id="hero-video" autoplay muted loop playsinline preload="metadata">
+    <source src="CZ_Cristalino_lifestyle_9x16_V1.mp4" type="video/mp4">
+  </video>
+  <div id="hero-overlay"></div>
+  <div class="hero-content reveal">
+    <p class="label" data-es="Dark Luxury · Mezcal & Tequila · México" data-en="Dark Luxury · Mezcal & Tequila · Mexico">Dark Luxury · Mezcal & Tequila · México</p>
+    <h1 class="display">CONTRALUZ<span style="color:var(--cyan)">®</span></h1>
+    <p data-es="Espíritus que emergen de la sombra. Destilados con obsesión, diseñados para quien no necesita ser visto para ser reconocido." data-en="Spirits that emerge from shadow. Distilled with obsession, designed for those who don't need to be seen to be recognized.">Espíritus que emergen de la sombra. Destilados con obsesión, diseñados para quien no necesita ser visto para ser reconocido.</p>
+    <a href="#sombrilla" class="hero-cta">
+      <span data-es="Descubrir el universo" data-en="Discover the universe">Descubrir el universo</span>
+      <span>↓</span>
+    </a>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- MARQUEE TICKER -->
+<div class="cz-ticker" aria-hidden="true">
+  <span class="ticker-track">
+    ◈ CONTRALUZ® &nbsp;·&nbsp; DARK LUXURY &nbsp;·&nbsp; MEZCAL ARTESANAL &nbsp;·&nbsp; TEQUILA CRISTALINO &nbsp;·&nbsp; PORTAL 11:11 &nbsp;·&nbsp; OAXACA &nbsp;·&nbsp; JALISCO &nbsp;·&nbsp; MÉXICO &nbsp;·&nbsp; EDICIÓN LIMITADA &nbsp;·&nbsp; 1,111 BOTELLAS &nbsp;·&nbsp;
+    ◈ CONTRALUZ® &nbsp;·&nbsp; DARK LUXURY &nbsp;·&nbsp; MEZCAL ARTESANAL &nbsp;·&nbsp; TEQUILA CRISTALINO &nbsp;·&nbsp; PORTAL 11:11 &nbsp;·&nbsp; OAXACA &nbsp;·&nbsp; JALISCO &nbsp;·&nbsp; MÉXICO &nbsp;·&nbsp; EDICIÓN LIMITADA &nbsp;·&nbsp; 1,111 BOTELLAS &nbsp;·&nbsp;
+  </span>
+</div>
+
+<!-- SOMBRILLA -->
+<section id="sombrilla">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label" data-es="La Sombrilla" data-en="The Brand Universe">La Sombrilla</p>
+      <h2 class="display" data-es="El universo CONTRALUZ" data-en="The CONTRALUZ Universe">El universo <span class="cyan">CONTRALUZ</span></h2>
+      <p data-es="Bajo una sola sombrilla, tres expresiones distintas del lujo líquido mexicano. Cada botella, una declaración." data-en="Under one umbrella, three distinct expressions of Mexican liquid luxury. Each bottle, a declaration.">Bajo una sola sombrilla, tres expresiones distintas del lujo líquido mexicano. Cada botella, una declaración.</p>
+    </div>
+
+    <div class="brand-pillars reveal">
+      <div class="pillar"><div class="pillar-icon">◈</div><h3 data-es="Social First" data-en="Social First">Social First</h3><p data-es="Cultura digital antes que campaña. Comunidad antes que cliente." data-en="Digital culture before campaign. Community before customer.">Cultura digital antes que campaña. Comunidad antes que cliente.</p></div>
+      <div class="pillar"><div class="pillar-icon">◆</div><h3 data-es="Dark Luxury" data-en="Dark Luxury">Dark Luxury</h3><p data-es="Sofisticación sin ostentación. El poder de lo que no se muestra." data-en="Sophistication without ostentation. The power of what isn't shown.">Sofisticación sin ostentación. El poder de lo que no se muestra.</p></div>
+      <div class="pillar"><div class="pillar-icon">◉</div><h3 data-es="High Energy" data-en="High Energy">High Energy</h3><p data-es="Rituales que trascienden la copa. Momentos que se convierten en mito." data-en="Rituals that transcend the glass. Moments that become myth.">Rituales que trascienden la copa. Momentos que se convierten en mito.</p></div>
+      <div class="pillar"><div class="pillar-icon">⬡</div><h3 data-es="Origen Dual" data-en="Dual Origin">Origen Dual</h3><p data-es="Oaxaca y Jalisco. Dos tierras, un carácter irreducible." data-en="Oaxaca and Jalisco. Two lands, one irreducible character.">Oaxaca y Jalisco. Dos tierras, un carácter irreducible.</p></div>
+    </div>
+
+    <div class="products-heading reveal">
+      <h2 class="display" data-es="Las Expresiones" data-en="The Expressions">Las Expresiones</h2>
+    </div>
+
+    <div class="products-sticky-container">
+      <!-- LEFT: sticky bottle display -->
+      <div class="sticky-bottle-col">
+        <div class="sticky-bottle-stage" id="sticky-bottle-stage">
+          <div id="sticky-aura"></div>
+          <img id="sticky-bottle-img" src="Contraluz_Front_MX.png" alt="CONTRALUZ Mezcal Cristalino">
+          <div class="sticky-dots">
+            <div class="sticky-dot active" data-idx="0"></div>
+            <div class="sticky-dot" data-idx="1"></div>
+            <div class="sticky-dot" data-idx="2"></div>
+          </div>
+          <div class="sticky-bottle-label">
+            <span id="sticky-label-tag">Mezcal · Oaxaca</span>
+            <span id="sticky-label-name">Cristalino Blanco</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: scrollable product info blocks -->
+      <div class="products-scroll-col">
+        <!-- Mezcal Cristalino -->
+        <div class="product-info-block active"
+             data-product="mezcal"
+             data-img="Contraluz_Front_MX.png"
+             data-tag="Mezcal · Oaxaca"
+             data-name="Cristalino Blanco"
+             data-aura="cyan"
+             onclick="openModal('mezcal')">
+          <p class="pib-tag" data-es="Mezcal · Oaxaca" data-en="Mezcal · Oaxaca">Mezcal · Oaxaca</p>
+          <h3 class="pib-name display" data-es="Cristalino Blanco" data-en="Cristalino Blanco">Cristalino Blanco</h3>
+          <p class="pib-price">$1,100 MXN · 750ml · 40% Alc.Vol.</p>
+          <p class="pib-desc" data-es="Espadín y Tobalá de altura, cosechados a mano en Miahuatlán. Destilado en alambique de cobre con doble corte. Cristalino, brillante, con una pureza mineral que te detiene en seco." data-en="Altitude-grown Espadín and Tobalá, hand-harvested in Miahuatlán. Double-distilled in copper still. Crystal clear, brilliant, with a mineral purity that stops you cold.">Espadín y Tobalá de altura, cosechados a mano en Miahuatlán. Destilado en alambique de cobre con doble corte. Cristalino, brillante, con una pureza mineral que te detiene en seco.</p>
+          <button class="pib-cta" onclick="event.stopPropagation();openModal('mezcal')" data-es="Notas de cata →" data-en="Tasting notes →">Notas de cata →</button>
+        </div>
+
+        <!-- Tequila Reposado -->
+        <div class="product-info-block"
+             data-product="tequila"
+             data-img="CZ_Tequila_MX_FRONT.png"
+             data-tag="Tequila · Jalisco"
+             data-name="Reposado Cristalino"
+             data-aura="cyan"
+             onclick="openModal('tequila')">
+          <p class="pib-tag" data-es="Tequila · Jalisco" data-en="Tequila · Jalisco">Tequila · Jalisco</p>
+          <h3 class="pib-name display" data-es="Reposado Cristalino" data-en="Reposado Cristalino">Reposado Cristalino</h3>
+          <p class="pib-price">$950 MXN · 750ml · 38% Alc.Vol.</p>
+          <p class="pib-desc" data-es="100% Agave Azul Weber de Los Altos de Jalisco. Reposado hasta 18 meses en roble americano ex-bourbon, luego filtrado para recuperar su claridad cristalina. Caramelo, vainilla y agave en perfecta armonía." data-en="100% Blue Weber Agave from Los Altos, Jalisco. Rested up to 18 months in ex-bourbon American oak, then filtered to recover its crystal clarity. Caramel, vanilla and agave in perfect harmony.">100% Agave Azul Weber de Los Altos de Jalisco. Reposado hasta 18 meses en roble americano ex-bourbon, luego filtrado para recuperar su claridad cristalina. Caramelo, vainilla y agave en perfecta armonía.</p>
+          <button class="pib-cta" onclick="event.stopPropagation();openModal('tequila')" data-es="Notas de cata →" data-en="Tasting notes →">Notas de cata →</button>
+        </div>
+
+        <!-- Mezcal 11:11 -->
+        <div class="product-info-block"
+             data-product="1111"
+             data-img="CZ11-11_Front.png"
+             data-tag="Edición Especial · Sakura"
+             data-name="11:11"
+             data-aura="sakura"
+             onclick="openModal('1111')">
+          <p class="pib-tag" data-es="Edición Especial · Sakura" data-en="Special Edition · Sakura">Edición Especial · Sakura</p>
+          <h3 class="pib-name display">11:11</h3>
+          <p class="pib-price">$2,300 MXN · 750ml · 42% Alc.Vol.</p>
+          <p class="pib-desc" data-es="Tobalá Silvestre de Miahuatlán. Flores de cerezo, pétalos de rosa, miel de agave silvestre. Solo 1,111 botellas por año, disponibles únicamente el 11 de noviembre a las 11:11 AM. Numerada y sellada a mano." data-en="Wild Tobalá from Miahuatlán. Cherry blossoms, rose petals, wild agave honey. Only 1,111 bottles per year, available exclusively on November 11th at 11:11 AM. Hand-numbered and sealed.">Tobalá Silvestre de Miahuatlán. Flores de cerezo, pétalos de rosa, miel de agave silvestre. Solo 1,111 botellas por año, disponibles únicamente el 11 de noviembre a las 11:11 AM. Numerada y sellada a mano.</p>
+          <button class="pib-cta" style="border-color:var(--sakura);color:var(--sakura)" onclick="event.stopPropagation();openModal('1111')" data-es="Notas de cata →" data-en="Tasting notes →">Notas de cata →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTAL 11:11 -->
+<section id="portal">
+  <div class="portal-bg"></div>
+  <div class="portal-kanji" aria-hidden="true">逆光</div>
+  <div class="portal-content reveal">
+    <p class="portal-eyebrow" data-es="Portal de Acceso Exclusivo" data-en="Exclusive Access Portal">Portal de Acceso Exclusivo</p>
+    <h2 class="display portal-title" style="color:var(--white)">PORTAL<br><span style="color:var(--gold)">11:11</span></h2>
+    <p class="serif-accent portal-subtitle" data-es="Cada 11 de noviembre, a las 11:11 AM" data-en="Every November 11th, at 11:11 AM">Cada 11 de noviembre, a las 11:11 AM</p>
+    <div class="fomo-bar">
+      <div class="fomo-dot"></div>
+      <span class="fomo-text" data-es="Edición limitada · Solo" data-en="Limited edition · Only">Edición limitada · Solo</span>
+      <span id="stock-num">1,111</span>
+      <span class="fomo-text" data-es="botellas disponibles" data-en="bottles available">botellas disponibles</span>
+    </div>
+    <div class="countdown" aria-live="polite">
+      <div class="cd-unit"><span class="cd-num" id="cd-days">000</span><span class="cd-label" data-es="Días" data-en="Days">Días</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-label" data-es="Horas" data-en="Hours">Horas</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><span class="cd-label" data-es="Minutos" data-en="Minutes">Minutos</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-label" data-es="Segundos" data-en="Seconds">Segundos</span></div>
+    </div>
+    <p class="portal-note" data-es="El próximo drop abre exactamente en la fecha y hora indicada. No hay preventas ni reservaciones previas." data-en="The next drop opens exactly on the date and time shown. No pre-sales or prior reservations.">El próximo drop abre exactamente en la fecha y hora indicada. No hay preventas ni reservaciones previas.</p>
+    <div class="portal-stats">
+      <div class="p-stat reveal"><h3 class="display">1,111</h3><p data-es="Botellas por edición" data-en="Bottles per edition">Botellas por edición</p></div>
+      <div class="p-stat reveal"><h3 class="display">11:11</h3><p data-es="Hora exacta del drop" data-en="Exact drop time">Hora exacta del drop</p></div>
+      <div class="p-stat reveal"><h3 class="display">NOV</h3><p data-es="Mes de disponibilidad" data-en="Month of availability">Mes de disponibilidad</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label" data-es="El Proceso" data-en="The Process">El Proceso</p>
+      <h2 class="display" data-es="Ocho pasos, una obsesión" data-en="Eight steps, one obsession">Ocho pasos,<br>una obsesión</h2>
+    </div>
+    <div class="process-grid reveal">
+      <div class="process-step"><div class="step-num">01</div><h4 class="step-name" data-es="Selección de Agave" data-en="Agave Selection">Selección de Agave</h4><p class="step-desc" data-es="Espadín y Tobalá de altura, cosechados a mano en Miahuatlán." data-en="Espadín and Tobalá from altitude, hand-harvested in Miahuatlán.">Espadín y Tobalá de altura, cosechados a mano en Miahuatlán.</p></div>
+      <div class="process-step"><div class="step-num">02</div><h4 class="step-name" data-es="Cocción en Papalometl" data-en="Cooking in Papalometl">Cocción en Papalometl</h4><p class="step-desc">Horno subterráneo de piedra volcánica. 72 horas de cocción lenta.</p></div>
+      <div class="process-step"><div class="step-num">03</div><h4 class="step-name" data-es="Molienda en Tahona" data-en="Tahona Milling">Molienda en Tahona</h4><p class="step-desc">Piedra de río jalada por mula. Sin atajos, sin prisa.</p></div>
+      <div class="process-step"><div class="step-num">04</div><h4 class="step-name" data-es="Fermentación Natural" data-en="Natural Fermentation">Fermentación Natural</h4><p class="step-desc">Tinas de madera de mezquite. Levaduras salvajes. 5-7 días.</p></div>
+      <div class="process-step"><div class="step-num">05</div><h4 class="step-name" data-es="Doble Destilación" data-en="Double Distillation">Doble Destilación</h4><p class="step-desc">Alambiques de cobre artesanales. Cortes precisos al 40% Alc.Vol.</p></div>
+      <div class="process-step"><div class="step-num">06</div><h4 class="step-name" data-es="Filtración Cristalina" data-en="Crystal Filtration">Filtración Cristalina</h4><p class="step-desc">Carbón activado y filtro de celulosa. Claridad sin comprometer aroma.</p></div>
+      <div class="process-step"><div class="step-num">07</div><h4 class="step-name" data-es="Reposo en Barricas" data-en="Barrel Rest">Reposo en Barricas</h4><p class="step-desc">Roble americano ex-bourbon. Hasta 18 meses para el Tequila Reposado.</p></div>
+      <div class="process-step"><div class="step-num">08</div><h4 class="step-name" data-es="Envasado a Mano" data-en="Hand Bottling">Envasado a Mano</h4><p class="step-desc">Botella numerada, encapsulada y sellada artesanalmente. Sin excepción.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DUAL ORIGIN -->
+<section id="origin">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label" data-es="Origen Dual" data-en="Dual Origin">Origen Dual</p>
+      <h2 class="display" data-es="Dos tierras. Un carácter." data-en="Two lands. One character.">Dos tierras.<br>Un carácter.</h2>
+    </div>
+    <div class="origin-grid reveal">
+      <div class="origin-side"><p class="origin-tag" data-es="Oaxaca · Mezcal" data-en="Oaxaca · Mezcal">Oaxaca · Mezcal</p><h3>Miahuatlán<br>de Porfirio Díaz</h3><div class="divider" style="margin:1rem 0"></div><p data-es="A 1,600 metros sobre el nivel del mar, donde la niebla de la sierra besa el agave. Aquí el tiempo no se mide en minutos sino en cosechas." data-en="At 1,600 meters above sea level, where the sierra mist kisses the agave. Here time is measured not in minutes but in harvests.">A 1,600 metros sobre el nivel del mar, donde la niebla de la sierra besa el agave. Aquí el tiempo no se mide en minutos sino en cosechas.</p></div>
+      <div class="origin-side" style="background:var(--smoke)"><p class="origin-tag" data-es="Jalisco · Tequila" data-en="Jalisco · Tequila">Jalisco · Tequila</p><h3>Los Altos<br>de Jalisco</h3><div class="divider" style="margin:1rem 0"></div><p data-es="Tierra roja de Los Altos, donde el agave azul Weber crece lento y fuerte. Suelo arcilloso, altitud que concentra los azúcares." data-en="The red earth of Los Altos, where the Blue Weber agave grows slow and strong. Clay soil, altitude concentrating the sugars.">Tierra roja de Los Altos, donde el agave azul Weber crece lento y fuerte. Suelo arcilloso, altitud que concentra los azúcares.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RITUAL SHOP -->
+<section id="shop">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label" data-es="Ritual Shop" data-en="Ritual Shop">Ritual Shop</p>
+      <h2 class="display" data-es="Kits Rituales" data-en="Ritual Kits">Kits<br><span class="cyan">Rituales</span></h2>
+      <p data-es="Todo lo que necesitas para convertir una copa en un ritual. Kits curados para el anfitrión obsesionado con los detalles." data-en="Everything you need to turn a glass into a ritual. Curated kits for the detail-obsessed host.">Todo lo que necesitas para convertir una copa en un ritual. Kits curados para el anfitrión obsesionado con los detalles.</p>
+    </div>
+    <div class="kits-grid reveal">
+      <div class="kit-card">
+        <span class="kit-badge" data-es="Más Popular" data-en="Most Popular">Más Popular</span>
+        <h3 class="kit-title" data-es="Kit Sakura" data-en="Sakura Kit">Kit Sakura</h3>
+        <p class="kit-desc" data-es="La experiencia completa del 11:11. Para quienes no celebran a medias." data-en="The complete 11:11 experience. For those who don't celebrate halfway.">La experiencia completa del 11:11. Para quienes no celebran a medias.</p>
+        <ul class="kit-items">
+          <li>1× Mezcal 11:11 Edición Sakura (750ml)</li>
+          <li>2× Copas de cristal CONTRALUZ</li>
+          <li>Caja rígida Sakura Black Edition</li>
+          <li>Guía de ritual impresa</li>
+        </ul>
+        <p class="kit-price">$2,800 <span>MXN · Envío incluido</span></p>
+      </div>
+      <div class="kit-card">
+        <span class="kit-badge" data-es="Para el Anfitrión" data-en="For the Host">Para el Anfitrión</span>
+        <h3 class="kit-title" data-es="Kit Host" data-en="Host Kit">Kit Host</h3>
+        <p class="kit-desc" data-es="El arsenal del anfitrión oscuro. Tres expresiones, seis copas, un solo ritual." data-en="The dark host's arsenal. Three expressions, six glasses, one ritual.">El arsenal del anfitrión oscuro. Tres expresiones, seis copas, un solo ritual.</p>
+        <ul class="kit-items">
+          <li>1× Mezcal Cristalino (750ml)</li>
+          <li>1× Tequila Reposado Cristalino (750ml)</li>
+          <li>4× Copas de cristal CONTRALUZ</li>
+          <li>Maletín negro estructurado</li>
+          <li>Tarjetas de cata personalizadas</li>
+        </ul>
+        <p class="kit-price">$2,500 <span>MXN · Envío incluido</span></p>
+      </div>
+      <div class="kit-card">
+        <span class="kit-badge" style="border-color:var(--silver);color:var(--silver)" data-es="Accesorios" data-en="Accessories">Accesorios</span>
+        <h3 class="kit-title" data-es="Set de Copas" data-en="Glassware Set">Set de Copas</h3>
+        <p class="kit-desc" data-es="Cristal soplado a mano. Diseño hexagonal que evoca la textura de cada botella." data-en="Hand-blown crystal. Hexagonal design echoing the texture of each bottle.">Cristal soplado a mano. Diseño hexagonal que evoca la textura de cada botella.</p>
+        <ul class="kit-items">
+          <li>2× Copas mezcaleras CONTRALUZ</li>
+          <li>Estuche de terciopelo negro</li>
+          <li>Certificado de autenticidad</li>
+        </ul>
+        <p class="kit-price">$500 <span>MXN · Envío incluido</span></p>
+      </div>
+    </div>
+    <div class="section-header reveal" style="margin-top:4rem;margin-bottom:1.5rem;text-align:left">
+      <p class="label" data-es="Botellas Individuales" data-en="Individual Bottles">Botellas Individuales</p>
+    </div>
+    <div class="shop-singles reveal">
+      <div class="shop-item">
+        <img class="shop-item-img" src="Contraluz_Front_MX.png" alt="Mezcal Cristalino">
+        <div class="shop-item-info"><h4>Mezcal Cristalino</h4><p class="price">$1,100 MXN</p><p class="stock-label" data-es="Disponible" data-en="Available">Disponible</p></div>
+      </div>
+      <div class="shop-item">
+        <img class="shop-item-img" src="CZ_Tequila_MX_FRONT.png" alt="Tequila Reposado">
+        <div class="shop-item-info"><h4>Tequila Reposado Cristalino</h4><p class="price">$950 MXN</p><p class="stock-label" data-es="Disponible" data-en="Available">Disponible</p></div>
+      </div>
+      <div class="shop-item">
+        <img class="shop-item-img" src="CZ11-11_Front.png" alt="Mezcal 11:11">
+        <div class="shop-item-info"><h4>Mezcal 11:11</h4><p class="price">$2,300 MXN</p><p class="stock-label" style="color:var(--sakura)" data-es="Edición Limitada" data-en="Limited Edition">Edición Limitada</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMUNIDAD -->
+<section id="comunidad">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label" data-es="La Comunidad" data-en="The Community">La Comunidad</p>
+      <h2 class="display" data-es="No somos clientes. Somos cómplices." data-en="We're not customers. We're accomplices.">No somos clientes.<br><span class="cyan">Somos cómplices.</span></h2>
+      <p data-es="Rituales compartidos. Sabores que crean memorias. Una tribu que no necesita volumen para hacer ruido." data-en="Shared rituals. Flavors that create memories. A tribe that doesn't need volume to make noise.">Rituales compartidos. Sabores que crean memorias. Una tribu que no necesita volumen para hacer ruido.</p>
+    </div>
+
+    <!-- Maluma — Socio Comercial -->
+    <div class="partner-grid reveal">
+      <div class="partner-img-wrap">
+        <img id="img-maluma" src="contraluz-36.jpg" alt="Maluma × CONTRALUZ">
+      </div>
+      <div class="partner-text">
+        <p class="label" data-es="Socio Comercial" data-en="Business Partner">Socio Comercial</p>
+        <h2 class="display">Maluma<br><span class="cyan">×</span> Contraluz</h2>
+        <p data-es="Maluma no es un vocero contratado. Es un socio que apuesta con capital propio al proyecto. Alguien que entiende que el lujo verdadero no se grita — se construye desde adentro." data-en="Maluma is not a hired spokesperson. He is a partner who invests his own capital in the project. Someone who understands that true luxury isn't shouted — it's built from within.">Maluma no es un vocero contratado. Es un socio que apuesta con capital propio al proyecto. Alguien que entiende que el lujo verdadero no se grita — se construye desde adentro.</p>
+        <blockquote class="partner-quote" data-es='"Invertí en CONTRALUZ porque creo en lo que representa: lujo que no necesita pedir permiso."' data-en='"I invested in CONTRALUZ because I believe in what it represents: luxury that doesn\'t need to ask permission."'>"Invertí en CONTRALUZ porque creo en lo que representa: lujo que no necesita pedir permiso."</blockquote>
+      </div>
+    </div>
+
+    <!-- Events -->
+    <div class="section-header reveal" style="margin-top:5rem;margin-bottom:2rem;text-align:left">
+      <p class="label" data-es="Eventos Próximos" data-en="Upcoming Events">Eventos Próximos</p>
+    </div>
+    <div class="events-grid reveal">
+      <div class="event-card" onclick="openEvent('silencio')">
+        <img class="event-img" src="contraluz-22.jpg" alt="Ritual del Silencio">
+        <div class="event-body">
+          <p class="event-date" data-es="15 MAY 2026 · CDMX" data-en="MAY 15, 2026 · CDMX">15 MAY 2026 · CDMX</p>
+          <h4 class="event-title" data-es="Ritual del Silencio" data-en="Ritual of Silence">Ritual del Silencio</h4>
+          <p class="event-loc" data-es="Roma Norte · Invitación exclusiva" data-en="Roma Norte · Exclusive invitation">Roma Norte · Invitación exclusiva</p>
+          <span class="event-card-cta" data-es="Ver detalles →" data-en="See details →">Ver detalles →</span>
+        </div>
+      </div>
+      <div class="event-card" onclick="openEvent('oscura')">
+        <img class="event-img" src="contraluz-36.jpg" alt="Cata Oscura">
+        <div class="event-body">
+          <p class="event-date" data-es="22 JUN 2026 · GUADALAJARA" data-en="JUN 22, 2026 · GUADALAJARA">22 JUN 2026 · GUADALAJARA</p>
+          <h4 class="event-title" data-es="Cata Oscura" data-en="Dark Tasting">Cata Oscura</h4>
+          <p class="event-loc" data-es="Hospicio Cabañas · Mesa de 12" data-en="Hospicio Cabañas · Table of 12">Hospicio Cabañas · Mesa de 12</p>
+          <span class="event-card-cta" data-es="Ver detalles →" data-en="See details →">Ver detalles →</span>
+        </div>
+      </div>
+      <div class="event-card" onclick="openEvent('nyc')" style="cursor:pointer">
+        <div style="width:100%;height:200px;background:var(--dim);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem">
+          <span style="font-size:2rem;opacity:.3">◈</span>
+          <span style="font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)" data-es="Próximamente" data-en="Coming Soon">Próximamente</span>
+        </div>
+        <div class="event-body">
+          <p class="event-date" data-es="NOV 2026 · NUEVA YORK" data-en="NOV 2026 · NEW YORK">NOV 2026 · NUEVA YORK</p>
+          <h4 class="event-title">Portal NYC</h4>
+          <p class="event-loc" data-es="Soho · Notificación via Portal 11:11" data-en="Soho · Notification via Portal 11:11">Soho · Notificación via Portal 11:11</p>
+          <span class="event-card-cta" data-es="Pre-registro →" data-en="Pre-register →">Pre-registro →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Playlists -->
+    <div class="section-header reveal" style="margin-top:4rem;margin-bottom:1.5rem;text-align:left">
+      <p class="label" data-es="Playlists Rituales" data-en="Ritual Playlists">Playlists Rituales</p>
+    </div>
+    <div class="playlist-row reveal">
+      <a class="playlist-pill" href="https://www.youtube.com/results?search_query=dark+ambient+luxury+lounge+mix" target="_blank" rel="noopener">
+        <div class="play-icon">▶</div>
+        <div class="pill-info"><span class="pill-name">Ritual Oscuro</span><span class="pill-tracks" data-es="87 tracks · Ambient · Dark Electronic" data-en="87 tracks · Ambient · Dark Electronic">87 tracks · Ambient · Dark Electronic</span></div>
+      </a>
+      <a class="playlist-pill" href="https://www.youtube.com/results?search_query=japanese+lofi+chill+sakura+midnight+mix" target="_blank" rel="noopener">
+        <div class="play-icon">▶</div>
+        <div class="pill-info"><span class="pill-name">Sakura Midnight</span><span class="pill-tracks" data-es="44 tracks · Lo-fi · Japonés · Chill" data-en="44 tracks · Lo-fi · Japanese · Chill">44 tracks · Lo-fi · Japonés · Chill</span></div>
+      </a>
+      <a class="playlist-pill" href="https://www.youtube.com/results?search_query=mezcal+session+mexican+indie+electronic+mix" target="_blank" rel="noopener">
+        <div class="play-icon">▶</div>
+        <div class="pill-info"><span class="pill-name">Mezcal Session</span><span class="pill-tracks" data-es="62 tracks · Indie Mx · House · Alternativo" data-en="62 tracks · Mx Indie · House · Alternative">62 tracks · Indie Mx · House · Alternativo</span></div>
+      </a>
+      <a class="playlist-pill" href="https://www.youtube.com/results?search_query=after+hours+dark+luxury+electronic+mix+2025" target="_blank" rel="noopener">
+        <div class="play-icon">▶</div>
+        <div class="pill-info"><span class="pill-name">Contraluz After</span><span class="pill-tracks" data-es="55 tracks · After Hours · Techno Suave" data-en="55 tracks · After Hours · Soft Techno">55 tracks · After Hours · Techno Suave</span></div>
+      </a>
+      <a class="playlist-pill" href="https://www.youtube.com/results?search_query=reggaeton+dark+trap+latino+urban+mix+2025" target="_blank" rel="noopener">
+        <div class="play-icon">▶</div>
+        <div class="pill-info"><span class="pill-name">Social First Mix</span><span class="pill-tracks" data-es="40 tracks · Dark Trap · Urbano · Reguetón" data-en="40 tracks · Dark Trap · Urban · Reggaeton">40 tracks · Dark Trap · Urbano · Reguetón</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SOPORTE -->
+<section id="soporte">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label" data-es="Soporte" data-en="Support">Soporte</p>
+      <h2 class="display" data-es="Estamos aquí." data-en="We're here.">Estamos<br><span class="cyan">aquí.</span></h2>
+    </div>
+    <div class="soporte-grid reveal">
+      <div>
+        <p class="label" style="margin-bottom:1.5rem" data-es="Preguntas Frecuentes" data-en="FAQ">Preguntas Frecuentes</p>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-es="¿Cómo funciona el Portal 11:11?" data-en="How does Portal 11:11 work?">¿Cómo funciona el Portal 11:11?</span><span class="faq-arrow">+</span></button><div class="faq-a"><span data-es="Cada 11 de noviembre exactamente a las 11:11 AM (hora CDMX), se abre por exactamente 11 minutos el acceso a la edición especial anual. Solo 1,111 botellas disponibles." data-en="Every November 11th at exactly 11:11 AM (CDMX time), access opens for exactly 11 minutes. Only 1,111 bottles available.">Cada 11 de noviembre exactamente a las 11:11 AM (hora CDMX), se abre por exactamente 11 minutos el acceso a la edición especial anual. Solo 1,111 botellas disponibles.</span></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-es="¿Hacen envíos a toda la República?" data-en="Do you ship nationwide?">¿Hacen envíos a toda la República?</span><span class="faq-arrow">+</span></button><div class="faq-a"><span>Sí. Envíos a toda la República Mexicana con embalaje especial para bebidas alcohólicas. Tiempo estimado: 3-5 días hábiles.</span></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-es="¿Qué cubre la Garantía Anti-Rotura?" data-en="What does the Anti-Break Guarantee cover?">¿Qué cubre la Garantía Anti-Rotura?</span><span class="faq-arrow">+</span></button><div class="faq-a"><span>Si tu botella llega rota o dañada por el transporte, la reemplazamos sin costo adicional. Solo envíanos foto dentro de 48h de recibirla.</span></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-es="¿Tienen opciones de personalización para eventos?" data-en="Do you offer event customization?">¿Tienen opciones de personalización para eventos?</span><span class="faq-arrow">+</span></button><div class="faq-a"><span>Sí. Para pedidos de 12 botellas o más ofrecemos etiquetas personalizadas, kits de mesa y presencia de representante de marca. Escríbenos con mínimo 3 semanas de anticipación.</span></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-es="¿Cómo contacto al equipo CONTRALUZ?" data-en="How do I contact the CONTRALUZ team?">¿Cómo contacto al equipo CONTRALUZ?</span><span class="faq-arrow">+</span></button><div class="faq-a"><span>Por WhatsApp, Instagram DM o correo. Respondemos en menos de 24 horas en días hábiles.</span></div></div>
+      </div>
+      <div>
+        <div class="garantia-card" style="margin-bottom:2rem">
+          <h3 data-es="Garantía Anti-Rotura" data-en="Anti-Break Guarantee">Garantía Anti-Rotura</h3>
+          <p data-es="Cada botella CONTRALUZ viaja en embalaje de triple capa. Pero si algo sale mal, respondemos." data-en="Every CONTRALUZ bottle travels in triple-layer packaging. But if something goes wrong, we respond.">Cada botella CONTRALUZ viaja en embalaje de triple capa. Pero si algo sale mal, respondemos.</p>
+          <ol class="garantia-steps">
+            <li>Fotografia la botella y el embalaje</li>
+            <li>Envía la foto dentro de 48 horas</li>
+            <li>Confirmamos y enviamos reemplazo</li>
+            <li>Recibes tu botella en 3-5 días</li>
+          </ol>
+        </div>
+        <div class="contact-links">
+          <p class="label" style="margin-bottom:.5rem" data-es="Contacto Directo" data-en="Direct Contact">Contacto Directo</p>
+          <a class="contact-link" href="https://instagram.com/contraluz_cristalino" target="_blank" rel="noopener"><span class="icon">◉</span><span>@CONTRALUZ_CRISTALINO</span></a>
+          <a class="contact-link" href="mailto:hola@contraluz.mx"><span class="icon">◈</span><span>hola@contraluz.mx</span></a>
+          <a class="contact-link" href="https://wa.me/52XXXXXXXXXX" target="_blank" rel="noopener"><span class="icon">◆</span><span>WhatsApp · Solo mensajes</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img class="footer-logo" src="Contraluz_Logotipo_Black.png" alt="CONTRALUZ">
+  <div class="footer-social">
+    <a href="https://instagram.com/contraluz_cristalino" target="_blank" rel="noopener">Instagram</a>
+    <a href="#">TikTok</a>
+    <a href="#">Spotify</a>
+  </div>
+  <div class="footer-links">
+    <a href="#sombrilla" data-es="La Marca" data-en="The Brand">La Marca</a>
+    <a href="#portal" data-es="Portal 11:11" data-en="Portal 11:11">Portal 11:11</a>
+    <a href="#shop" data-es="Tienda Ritual" data-en="Ritual Shop">Tienda Ritual</a>
+    <a href="#comunidad" data-es="Comunidad" data-en="Community">Comunidad</a>
+    <a href="#soporte" data-es="Soporte" data-en="Support">Soporte</a>
+  </div>
+  <p class="footer-legal" data-es="CONTRALUZ® 2026. Todos los derechos reservados. El consumo de bebidas alcohólicas es para mayores de 18 años. Beba con responsabilidad." data-en="CONTRALUZ® 2026. All rights reserved. Alcoholic beverage consumption is for adults 18 and over. Drink responsibly.">CONTRALUZ® 2026. Todos los derechos reservados. El consumo de bebidas alcohólicas es para mayores de 18 años. Beba con responsabilidad.</p>
+</footer>
+
+<!-- LIQUID HERO TRANSITION -->
+<div id="liquid-transition" aria-hidden="true">
+  <svg class="lt-wave" viewBox="0 0 2200 75" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Wave 1 — foreground, more opaque -->
+    <path class="w1" fill="rgba(0,194,160,0.5)"
+      d="M0,38 Q275,4 550,38 Q825,72 1100,38 Q1375,4 1650,38 Q1925,72 2200,38 L2200,75 L0,75 Z"/>
+    <!-- Wave 2 — background, lighter, offset phase -->
+    <path class="w2" fill="rgba(0,155,122,0.3)"
+      d="M0,50 Q367,18 734,50 Q1101,82 1468,50 Q1835,18 2202,50 L2202,75 L0,75 Z"/>
+  </svg>
+  <div class="lt-body"></div>
+</div>
+
+<!-- PERMANENT TEAL LIQUID VEIL — always on, never disappears -->
+<div id="teal-veil" aria-hidden="true"></div>
+
+<!-- CURSOR -->
+<div id="cx-ring"></div>
+<div id="cx-dot"></div>
+
+<!-- LIQUID SCROLL PROGRESS — old fashioned lowball glass -->
+<div id="liquid-progress" aria-hidden="true">
+  <svg id="lp-svg" viewBox="0 0 64 92" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="lp-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#00C2A0" stop-opacity="0.88"/>
+        <stop offset="100%" stop-color="#007A65" stop-opacity="0.48"/>
+      </linearGradient>
+      <!-- Clip = interior of old fashioned glass body -->
+      <clipPath id="lp-clip">
+        <path d="M4,14 L10,78 L54,78 L60,14 Z"/>
+      </clipPath>
+    </defs>
+
+    <!-- Liquid fill (clipped to glass interior) -->
+    <g clip-path="url(#lp-clip)">
+      <rect id="liquid-fill-rect" x="0" y="78" width="64" height="0" fill="url(#lp-grad)"/>
+      <!-- Wave at liquid surface -->
+      <g id="liquid-wave-group" transform="translate(0,78)" style="display:none">
+        <path class="wave-anim"
+              d="M-64,0 Q-32,-5 0,0 Q32,5 64,0 Q96,-5 128,0 L128,10 L-64,10 Z"
+              fill="#00C2A0" opacity="0.45"/>
+      </g>
+    </g>
+
+    <!-- Ice cubes — always visible, rendered above liquid fill -->
+    <g id="ice-cubes">
+      <rect x="9"  y="54" width="15" height="15" rx="1.5"
+            fill="rgba(200,240,255,0.15)" stroke="rgba(200,240,255,0.55)" stroke-width="0.75"
+            transform="rotate(-16 16.5 61.5)"/>
+      <rect x="30" y="50" width="17" height="16" rx="1.5"
+            fill="rgba(200,240,255,0.12)" stroke="rgba(200,240,255,0.45)" stroke-width="0.75"
+            transform="rotate(11 38.5 58)"/>
+      <rect x="45" y="57" width="12" height="12" rx="1"
+            fill="rgba(200,240,255,0.10)" stroke="rgba(200,240,255,0.38)" stroke-width="0.65"
+            transform="rotate(-9 51 63)"/>
+    </g>
+
+    <!-- ── OLD FASHIONED / LOWBALL GLASS — CONTRALUZ cut crystal ── -->
+    <!-- Thick rim band -->
+    <rect x="2"  y="6"  width="60" height="8"
+          fill="none" stroke="rgba(0,194,160,0.38)" stroke-width="1.2"/>
+    <line x1="3"  y1="10" x2="61" y2="10"
+          stroke="rgba(0,194,160,0.15)" stroke-width="0.5"/>
+    <!-- Body — wide, slightly tapered (classic lowball silhouette) -->
+    <path d="M2,14 L10,78 L54,78 L62,14"
+          fill="none" stroke="rgba(0,194,160,0.24)" stroke-width="1.1" stroke-linejoin="miter"/>
+    <!-- Facet cuts — CONTRALUZ geometry -->
+    <line x1="20" y1="15" x2="18" y2="77"
+          stroke="rgba(0,194,160,0.10)" stroke-width="0.8"/>
+    <line x1="44" y1="15" x2="46" y2="77"
+          stroke="rgba(0,194,160,0.10)" stroke-width="0.8"/>
+    <!-- Diagonal cross-facets for cut-crystal sparkle -->
+    <line x1="20" y1="15" x2="46" y2="77"
+          stroke="rgba(0,194,160,0.04)" stroke-width="0.6"/>
+    <line x1="44" y1="15" x2="18" y2="77"
+          stroke="rgba(0,194,160,0.04)" stroke-width="0.6"/>
+    <!-- Heavy base plate -->
+    <path d="M9,78 L55,78 L58,88 L6,88 Z"
+          fill="none" stroke="rgba(0,194,160,0.24)" stroke-width="1"/>
+    <line x1="7"  y1="83" x2="57" y2="83"
+          stroke="rgba(0,194,160,0.10)" stroke-width="0.5"/>
+    <!-- Crystal reflection — inner left wall -->
+    <line x1="7"  y1="16" x2="13" y2="76"
+          stroke="rgba(255,255,255,0.08)" stroke-width="3" stroke-linecap="round"/>
+    <!-- Rim top shine -->
+    <line x1="4"  y1="7"  x2="60" y2="7"
+          stroke="rgba(255,255,255,0.14)" stroke-width="0.5"/>
+    <!-- Fill level ticks (right side) -->
+    <line x1="55" y1="34" x2="62" y2="34" stroke="rgba(0,194,160,0.22)" stroke-width="0.8"/>
+    <line x1="54" y1="56" x2="61" y2="56" stroke="rgba(0,194,160,0.14)" stroke-width="0.6"/>
+    <line x1="55" y1="76" x2="62" y2="76" stroke="rgba(0,194,160,0.22)" stroke-width="0.8"/>
+  </svg>
+  <span id="lp-label">0%</span>
+</div>
+
+<!-- TASTING MODAL -->
+<div id="modal-overlay" role="dialog" aria-modal="true" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    <p class="modal-label" id="modal-tag"></p>
+    <h2 class="display modal-title" id="modal-title"></h2>
+    <div class="modal-grid" id="modal-attrs"></div>
+    <div class="modal-notes" id="modal-notes"></div>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div id="event-modal-overlay" role="dialog" aria-modal="true" onclick="closeEventModal(event)">
+  <div class="event-modal-box">
+    <button class="event-modal-close" onclick="closeEventModal()">✕</button>
+    <img class="event-modal-cover" id="ev-cover" src="" alt="" style="display:none">
+    <div class="event-modal-body">
+      <p class="event-modal-date" id="ev-date"></p>
+      <h2 class="display event-modal-title" id="ev-title"></h2>
+      <p class="event-modal-desc" id="ev-desc"></p>
+      <div class="event-modal-details" id="ev-details"></div>
+      <a class="event-modal-cta" href="#" id="ev-cta" target="_blank" rel="noopener" data-es="Solicitar invitación" data-en="Request invitation">Solicitar invitación</a>
+    </div>
+  </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+/* ─── LANG ─── */
+let lang = 'es';
+function toggleLang(){
+  lang = lang==='es'?'en':'es';
+  document.getElementById('lang-btn').textContent = lang==='es'?'EN':'ES';
+  document.querySelectorAll('[data-es]').forEach(el=>{
+    const val = el.dataset[lang];
+    if(val) el.innerHTML = val;
+  });
+}
+
+/* ─── AGE GATE ─── */
+(function(){
+  if(document.cookie.split(';').some(c=>c.trim().startsWith('cz_age='))){
+    document.getElementById('age-gate').classList.add('hidden');
+  } else {
+    document.body.style.overflow='hidden';
+  }
+})();
+function passAgeGate(){
+  const d=new Date(); d.setDate(d.getDate()+7);
+  document.cookie=`cz_age=1;expires=${d.toUTCString()};path=/`;
+  const ag=document.getElementById('age-gate');
+  ag.style.transition='opacity .6s'; ag.style.opacity='0';
+  setTimeout(()=>{ag.classList.add('hidden');document.body.style.overflow='';},600);
+}
+function failAgeGate(){ window.location.href='https://www.who.int/'; }
+
+/* ─── NAV SCROLL ─── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50);
+},{passive:true});
+
+/* ─── MOBILE DRAWER ─── */
+function openDrawer(){ document.getElementById('mobile-drawer').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeDrawer(){ document.getElementById('mobile-drawer').classList.remove('open'); document.body.style.overflow=''; }
+
+/* ─── REVEAL ─── */
+const revealObs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); revealObs.unobserve(e.target); } });
+},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+/* ─── 3D BOTTLE TILT ─── */
+document.querySelectorAll('[data-tilt]').forEach(card=>{
+  const img = card.querySelector('.bottle-wrap img');
+  card.addEventListener('mousemove', e=>{
+    const rect = card.getBoundingClientRect();
+    const cx = rect.left + rect.width/2;
+    const cy = rect.top + rect.height/2;
+    const dx = (e.clientX - cx) / (rect.width/2);   // -1 to 1
+    const dy = (e.clientY - cy) / (rect.height/2);  // -1 to 1
+    const rotY = dx * 18;   // max ±18deg horizontal
+    const rotX = -dy * 10;  // max ±10deg vertical
+    const tx = dx * 6;      // slight lateral translation
+    const ty = dy * 4;
+    img.style.transform = `perspective(900px) rotateY(${rotY}deg) rotateX(${rotX}deg) translate(${tx}px,${ty}px) scale(1.05)`;
+    img.style.filter = `drop-shadow(${-dx*12}px 20px 40px rgba(0,0,0,.65)) drop-shadow(0 0 20px rgba(0,194,160,.08))`;
+  });
+  card.addEventListener('mouseleave', ()=>{
+    img.style.transition = 'transform .5s ease, filter .4s ease';
+    img.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translate(0,0) scale(1)';
+    img.style.filter = 'drop-shadow(0 20px 40px rgba(0,0,0,.7))';
+    setTimeout(()=>{ img.style.transition=''; }, 500);
+  });
+});
+
+/* ─── COUNTDOWN ─── */
+function getNextDrop(){
+  const now=new Date();
+  let t=new Date(now.getFullYear(),10,11,11,11,0,0);
+  if(now>=t) t.setFullYear(t.getFullYear()+1);
+  return t;
+}
+function pad(n,d=2){return String(n).padStart(d,'0')}
+function updateCountdown(){
+  const diff=getNextDrop()-new Date();
+  if(diff<=0){ ['days','hours','mins','secs'].forEach(id=>document.getElementById('cd-'+id).textContent='00'); return; }
+  document.getElementById('cd-days').textContent=pad(Math.floor(diff/86400000),3);
+  document.getElementById('cd-hours').textContent=pad(Math.floor((diff%86400000)/3600000));
+  document.getElementById('cd-mins').textContent=pad(Math.floor((diff%3600000)/60000));
+  document.getElementById('cd-secs').textContent=pad(Math.floor((diff%60000)/1000));
+}
+updateCountdown(); setInterval(updateCountdown,1000);
+
+/* ─── SAKURA PETALS ─── */
+(function(){
+  const portal=document.getElementById('portal');
+  const svg=`<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><ellipse cx="10" cy="6" rx="5" ry="8" transform="rotate(-20 10 10)"/></svg>`;
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div'); p.className='petal';
+    const s=10+Math.random()*18, l=Math.random()*100, delay=Math.random()*12, dur=8+Math.random()*10;
+    p.style.cssText=`left:${l}%;width:${s}px;height:${s}px;animation-duration:${dur}s;animation-delay:-${delay}s`;
+    p.innerHTML=svg; portal.appendChild(p);
+  }
+})();
+
+/* ─── TASTING MODAL DATA ─── */
+const modalData={
+  mezcal:{
+    es:{tag:'Mezcal · Oaxaca · Espadín + Tobalá',title:'Cristalino Blanco',attrs:[{label:'Categoría',val:'Mezcal Artesanal'},{label:'Agave',val:'Espadín + Tobalá'},{label:'Origen',val:'Miahuatlán, Oaxaca'},{label:'Alc. Vol.',val:'40%'},{label:'Proceso',val:'Tahona + Alambique Cobre'},{label:'Filtración',val:'Carbón + Celulosa'}],notes:'<strong>Vista:</strong> Cristalino, brillante, sin color.<br><strong>Nariz:</strong> Agave cocido, tierra húmeda, miel de abeja silvestre, toque de cítrico y hierbas del campo.<br><strong>Boca:</strong> Cuerpo medio, terso y sedoso. Dulzor natural del agave, vainilla suave, pétalos de flores silvestres, leve mineralidad volcánica.<br><strong>Final:</strong> Largo y limpio. Retorno suave a miel y agave fresco.'},
+    en:{tag:'Mezcal · Oaxaca · Espadín + Tobalá',title:'Cristalino Blanco',attrs:[{label:'Category',val:'Artisanal Mezcal'},{label:'Agave',val:'Espadín + Tobalá'},{label:'Origin',val:'Miahuatlán, Oaxaca'},{label:'Alc. Vol.',val:'40%'},{label:'Process',val:'Tahona + Copper Still'},{label:'Filtration',val:'Carbon + Cellulose'}],notes:'<strong>Appearance:</strong> Crystal clear, brilliant, colorless.<br><strong>Nose:</strong> Cooked agave, damp earth, wild honey, citrus hints and field herbs.<br><strong>Palate:</strong> Medium body, smooth and silky. Natural agave sweetness, soft vanilla, wild flower petals, light volcanic minerality.<br><strong>Finish:</strong> Long and clean. Soft return of honey and fresh agave.'}
+  },
+  tequila:{
+    es:{tag:'Tequila · Jalisco · Agave Azul Weber',title:'Reposado Cristalino',attrs:[{label:'Categoría',val:'Tequila Reposado'},{label:'Agave',val:'100% Azul Weber'},{label:'Origen',val:'Los Altos, Jalisco'},{label:'Alc. Vol.',val:'38%'},{label:'Reposo',val:'Hasta 18 meses en roble americano'},{label:'Filtración',val:'Carbón Activo Triple'}],notes:'<strong>Vista:</strong> Cristalino brillante, reflejos dorados casi imperceptibles.<br><strong>Nariz:</strong> Agave cocido al vapor, caramelo suave, vainilla de roble, durazno maduro.<br><strong>Boca:</strong> Pleno y envolvente. Dulzor de agave y caramelo, madera bien integrada, especias dulces.<br><strong>Final:</strong> Prolongado y aterciopelado. Retorno de vainilla y agave. Elegante.'},
+    en:{tag:'Tequila · Jalisco · Blue Weber Agave',title:'Reposado Cristalino',attrs:[{label:'Category',val:'Reposado Tequila'},{label:'Agave',val:'100% Blue Weber'},{label:'Origin',val:'Los Altos, Jalisco'},{label:'Alc. Vol.',val:'38%'},{label:'Rest',val:'Up to 18 months in American oak'},{label:'Filtration',val:'Triple Active Carbon'}],notes:'<strong>Appearance:</strong> Brilliant crystal, almost imperceptible golden highlights.<br><strong>Nose:</strong> Steam-cooked agave, soft caramel, oak vanilla, ripe peach.<br><strong>Palate:</strong> Full and enveloping. Agave and caramel sweetness, well-integrated wood, sweet spices.<br><strong>Finish:</strong> Prolonged and velvety. Return of vanilla and agave. Elegant.'}
+  },
+  '1111':{
+    es:{tag:'Edición Especial · Sakura · Noche',title:'Mezcal 11:11',attrs:[{label:'Categoría',val:'Mezcal Especial'},{label:'Agave',val:'Tobalá Silvestre'},{label:'Origen',val:'Miahuatlán, Oaxaca'},{label:'Alc. Vol.',val:'42%'},{label:'Edición',val:'1,111 botellas anuales'},{label:'Botella',val:'Negro Sakura + Numerada'}],notes:'<strong>Vista:</strong> Cristalino con un velo rosado imperceptible. Brillante como medianoche bajo luna llena.<br><strong>Nariz:</strong> Flores de cerezo, pétalos de rosa, miel de agave silvestre, mineralidad oscura y un eco de madera de sándalo.<br><strong>Boca:</strong> Compleja y misteriosa. Florales intensos, especias negras, cacao amargo, sal marina.<br><strong>Final:</strong> Interminable. La flor de sakura persiste mucho después de la última gota.<br><br><em>Disponible únicamente el 11 de noviembre a las 11:11 AM</em>'},
+    en:{tag:'Special Edition · Sakura · Night',title:'Mezcal 11:11',attrs:[{label:'Category',val:'Special Mezcal'},{label:'Agave',val:'Wild Tobalá'},{label:'Origin',val:'Miahuatlán, Oaxaca'},{label:'Alc. Vol.',val:'42%'},{label:'Edition',val:'1,111 bottles annually'},{label:'Bottle',val:'Black Sakura + Numbered'}],notes:'<strong>Appearance:</strong> Crystal clear with an imperceptible rosy veil. Brilliant like midnight under a full moon.<br><strong>Nose:</strong> Cherry blossoms, rose petals, wild agave honey, dark minerality and an echo of sandalwood.<br><strong>Palate:</strong> Complex and mysterious. Intense florals, black spices, bitter cacao, sea salt.<br><strong>Finish:</strong> Endless. The sakura flower persists long after the last drop.<br><br><em>Available only on November 11th at 11:11 AM</em>'}
+  }
+};
+
+function openModal(type){
+  const d=modalData[type][lang];
+  document.getElementById('modal-tag').textContent=d.tag;
+  document.getElementById('modal-title').textContent=d.title;
+  document.getElementById('modal-attrs').innerHTML=d.attrs.map(a=>`<div class="modal-attr"><h4>${a.label}</h4><p>${a.val}</p></div>`).join('');
+  document.getElementById('modal-notes').innerHTML=d.notes;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal-overlay'))return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ─── EVENT MODAL DATA ─── */
+const eventData={
+  silencio:{
+    cover:'contraluz-22.jpg',
+    date:'15 MAYO 2026 · CIUDAD DE MÉXICO',
+    title:'Ritual del Silencio',
+    desc:'Una cata meditativa para 18 personas en un espacio sin pantallas ni celulares. La única regla: silencio total durante la primera copa. El objetivo es redescubrir los sabores cuando el ruido desaparece. CONTRALUZ presenta tres expresiones en un formato de 90 minutos guiado por nuestro maestro destilador.',
+    details:[
+      {label:'Fecha',val:'15 de Mayo, 2026'},
+      {label:'Hora',val:'20:00 hrs CDMX'},
+      {label:'Lugar',val:'Galería Privada, Roma Norte'},
+      {label:'Formato',val:'Cata guiada · 90 minutos'},
+      {label:'Cupo',val:'18 personas máximo'},
+      {label:'Incluye',val:'3 expresiones + maridaje'}
+    ],
+    cta:'mailto:hola@contraluz.mx?subject=Ritual del Silencio — Solicitud de invitación'
+  },
+  oscura:{
+    cover:'contraluz-36.jpg',
+    date:'22 JUNIO 2026 · GUADALAJARA',
+    title:'Cata Oscura',
+    desc:'Cata a ciegas en uno de los espacios más emblemáticos de México: el Hospicio Cabañas. 12 personas. 6 expresiones sin etiqueta. El reto es identificar cada botella solo por nariz y paladar. Una experiencia que desnuda los prejuicios y pone a prueba los sentidos.',
+    details:[
+      {label:'Fecha',val:'22 de Junio, 2026'},
+      {label:'Hora',val:'19:30 hrs'},
+      {label:'Lugar',val:'Hospicio Cabañas, Guadalajara'},
+      {label:'Formato',val:'Cata a ciegas · 2 horas'},
+      {label:'Cupo',val:'Mesa de 12 personas'},
+      {label:'Incluye',val:'6 expresiones + maridaje gourmet'}
+    ],
+    cta:'mailto:hola@contraluz.mx?subject=Cata Oscura GDL — Solicitud de invitación'
+  },
+  nyc:{
+    cover:'contraluz-22.jpg',
+    date:'NOVIEMBRE 2026 · NUEVA YORK',
+    title:'Portal NYC',
+    desc:'La primera presentación de CONTRALUZ en mercado internacional. Un evento de una sola noche en el Soho de Nueva York que coincidirá con el lanzamiento del Portal 11:11 edición 2026. Acceso exclusivo para socios, coleccionistas y medios seleccionados.',
+    details:[
+      {label:'Fecha',val:'11 de Noviembre, 2026'},
+      {label:'Hora',val:'11:11 PM EDT'},
+      {label:'Lugar',val:'Soho, Nueva York (TBD)'},
+      {label:'Formato',val:'Lanzamiento internacional'},
+      {label:'Cupo',val:'Invitación únicamente'},
+      {label:'Notificación',val:'Via Portal 11:11'}
+    ],
+    cta:'mailto:hola@contraluz.mx?subject=Portal NYC — Pre-registro'
+  }
+};
+
+function openEvent(key){
+  const d=eventData[key];
+  const cover=document.getElementById('ev-cover'); cover.src=d.cover; cover.style.display='block';
+  document.getElementById('ev-date').textContent=d.date;
+  document.getElementById('ev-title').textContent=d.title;
+  document.getElementById('ev-desc').textContent=d.desc;
+  document.getElementById('ev-details').innerHTML=d.details.map(x=>`<div class="event-modal-detail"><h4>${x.label}</h4><p>${x.val}</p></div>`).join('');
+  document.getElementById('ev-cta').href=d.cta;
+  document.getElementById('event-modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeEventModal(e){
+  if(e&&e.target!==document.getElementById('event-modal-overlay'))return;
+  document.getElementById('event-modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ─── FAQ ─── */
+function toggleFaq(btn){
+  const ans=btn.nextElementSibling;
+  const isOpen=ans.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(q=>q.classList.remove('open'));
+  if(!isOpen){ ans.classList.add('open'); btn.classList.add('open'); }
+}
+
+
+/* ─── STOCK flicker ─── */
+(function(){
+  const el=document.getElementById('stock-num');
+  let c=1111;
+  function f(){ c=Math.max(1108,Math.min(1111,c+Math.floor(Math.random()*3)-1)); el.textContent=c.toLocaleString(); setTimeout(f,3000+Math.random()*4000); }
+  setTimeout(f,5000);
+})();
+
+/* ─── ESC key ─── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    closeModal(); closeEventModal(); closeDrawer();
+  }
+});
+
+/* ══════════════════════════════════════════════════════════
+   ⑥ LIQUID WAVE HERO TRANSITION
+══════════════════════════════════════════════════════════ */
+(function(){
+  const ltEl    = document.getElementById('liquid-transition');
+  const heroSec = document.getElementById('hero');
+  if(!ltEl || !heroSec) return;
+
+  let rafPend = false, curSY = 0;
+
+  function frame(){
+    const sy    = curSY;
+    const heroH = heroSec.offsetHeight;
+
+    /* Timeline:
+       0–62% hero scroll  → liquid rises immediately from 0 → 100vh
+       62–86%             → liquid fades out, revealing next section
+       > 86%              → hidden (page scrolled well past hero)       */
+    const startY = 0;
+    const fullY  = heroH * 0.62;
+    const fadeY  = heroH * 0.86;
+
+    if(sy < startY){
+      ltEl.style.height  = '15vh';
+      ltEl.style.opacity = '0.08';
+    } else if(sy <= fullY){
+      const pct = (sy - startY) / (fullY - startY);
+      ltEl.style.height  = (pct * 100).toFixed(2) + 'vh';
+      ltEl.style.opacity = '1';
+    } else if(sy <= fadeY){
+      ltEl.style.height  = '100vh';
+      const fp = (sy - fullY) / (fadeY - fullY);
+      /* Fade down to 0.07 minimum — barely-there teal atmosphere */
+      ltEl.style.opacity = Math.max(0.07, 1 - fp * 1.1).toFixed(3);
+    } else {
+      /* Past hero: settle at a whisper of liquid teal */
+      ltEl.style.height  = '100vh';
+      ltEl.style.opacity = '0.07';
+    }
+
+    rafPend = false;
+  }
+
+  window.addEventListener('scroll', ()=>{
+    curSY = window.scrollY;
+    if(!rafPend){ requestAnimationFrame(frame); rafPend = true; }
+  }, {passive:true});
+
+  frame(); /* init */
+})();
+
+/* ══════════════════════════════════════════════════════════
+   ④ CUSTOM CURSOR (smooth lerp ring + dot)
+══════════════════════════════════════════════════════════ */
+(function(){
+  const ring = document.getElementById('cx-ring');
+  const dot  = document.getElementById('cx-dot');
+  if(!ring || !dot) return;
+  /* Only on devices with real hover (mouse) */
+  if(window.matchMedia('(hover:none)').matches) return;
+
+  let mx=0, my=0, rx=0, ry=0;
+
+  document.addEventListener('mousemove', e=>{
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx+'px'; dot.style.top = my+'px';
+  });
+  document.addEventListener('mousedown', ()=> ring.classList.add('is-click'));
+  document.addEventListener('mouseup',   ()=> ring.classList.remove('is-click'));
+  document.addEventListener('mouseleave',()=>{ ring.style.opacity='0'; dot.style.opacity='0'; });
+  document.addEventListener('mouseenter',()=>{ ring.style.opacity='1'; dot.style.opacity='1'; });
+
+  /* Hover — ring expands on interactive elements */
+  document.querySelectorAll(
+    'a,button,[onclick],.product-info-block,.kit-card,.event-card,.playlist-pill,.sticky-dot,.faq-q,.pib-cta,.partner-img-wrap,.nav-logo'
+  ).forEach(el=>{
+    el.addEventListener('mouseenter', ()=> ring.classList.add('is-hover'));
+    el.addEventListener('mouseleave', ()=> ring.classList.remove('is-hover'));
+  });
+
+  /* Smooth lag (lerp at 12%) */
+  (function anim(){
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx+'px';
+    ring.style.top  = ry+'px';
+    requestAnimationFrame(anim);
+  })();
+})();
+
+/* ══════════════════════════════════════════════════════════
+   ⑤ ANIMATED FILM GRAIN OVERLAY (luxury texture)
+══════════════════════════════════════════════════════════ */
+(function(){
+  const SIZE = 200;
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = SIZE;
+  const ctx = canvas.getContext('2d');
+
+  const overlay = document.createElement('div');
+  overlay.style.cssText = [
+    'position:fixed','inset:0','z-index:9989','pointer-events:none',
+    'opacity:0.042','mix-blend-mode:overlay',
+    `background-size:${SIZE}px ${SIZE}px`
+  ].join(';');
+  document.body.appendChild(overlay);
+
+  function refresh(){
+    const d = ctx.createImageData(SIZE, SIZE);
+    for(let i=0; i<d.data.length; i+=4){
+      const v = (Math.random()*255)|0;
+      d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3]=255;
+    }
+    ctx.putImageData(d,0,0);
+    overlay.style.backgroundImage = `url(${canvas.toDataURL()})`;
+  }
+  refresh();
+  setInterval(refresh, 95);
+})();
+
+/* ══════════════════════════════════════════════════════════
+   ① HERO PARALLAX + ② LIQUID BOTTLE PROGRESS  (unified rAF)
+══════════════════════════════════════════════════════════ */
+(function(){
+  const lpEl      = document.getElementById('liquid-progress');
+  const lpFill    = document.getElementById('liquid-fill-rect');
+  const lpWave    = document.getElementById('liquid-wave-group');
+  const lpLbl     = document.getElementById('lp-label');
+  const heroVid   = document.getElementById('hero-video');
+  const heroCtx   = document.querySelector('#hero .hero-content');
+  const heroHint  = document.querySelector('#hero .scroll-hint');
+  const heroSec   = document.getElementById('hero');
+
+  /* Glass interior fill zone (viewBox coords — old fashioned lowball 64×92) */
+  const BODY_TOP = 14, BODY_BOT = 78, BODY_H = BODY_BOT - BODY_TOP; // 64px
+
+  let rafPending = false;
+  let curSY = 0;
+  let lpShown = false;
+
+  function frame(){
+    const sy   = curSY;
+    const maxSY= Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const pct  = Math.min(sy / maxSY, 1);
+
+    /* ── Liquid fill ── */
+    if(lpFill){
+      const fillH = pct * BODY_H;
+      const fillY = BODY_BOT - fillH;
+      lpFill.setAttribute('y', fillY);
+      lpFill.setAttribute('height', fillH + 1);
+      if(lpWave){
+        if(fillH > 5){
+          lpWave.style.display = '';
+          lpWave.setAttribute('transform',`translate(0,${fillY})`);
+        } else {
+          lpWave.style.display = 'none';
+        }
+      }
+      if(lpLbl) lpLbl.textContent = Math.round(pct*100)+'%';
+      /* Ice cubes are always visible (set in HTML, no JS toggle needed) */
+    }
+
+    /* ── Show / hide progress bar ── */
+    if(lpEl){
+      if(!lpShown && sy > 120){ lpEl.classList.add('lp-visible'); lpShown = true; }
+      else if(lpShown && sy < 60){ lpEl.classList.remove('lp-visible'); lpShown = false; }
+    }
+
+    /* ── Hero parallax ── */
+    if(heroSec && heroVid){
+      const heroH = heroSec.offsetHeight;
+      if(sy < heroH * 1.4){
+        const capped = Math.min(sy, heroH);
+        /* Video drifts down at 0.28x → creates depth recession */
+        heroVid.style.transform = `translateY(${capped * 0.28}px)`;
+        /* Content floats up slightly + fades */
+        const fadePct = capped / heroH;
+        if(heroCtx){
+          heroCtx.style.transform = `translateY(${-capped * 0.09}px)`;
+          heroCtx.style.opacity   = Math.max(0, 1 - fadePct * 2.4);
+        }
+        if(heroHint) heroHint.style.opacity = Math.max(0, 1 - fadePct * 4);
+      }
+    }
+
+    rafPending = false;
+  }
+
+  window.addEventListener('scroll', ()=>{
+    curSY = window.scrollY;
+    if(!rafPending){ requestAnimationFrame(frame); rafPending = true; }
+  }, {passive:true});
+
+  /* Run once on load */
+  requestAnimationFrame(frame);
+})();
+
+
+/* ══════════════════════════════════════════════════════════
+   ③ STICKY PRODUCT BOTTLE  (IntersectionObserver + 3D flip)
+══════════════════════════════════════════════════════════ */
+(function(){
+  const blocks   = document.querySelectorAll('.product-info-block');
+  const sImg     = document.getElementById('sticky-bottle-img');
+  const sAura    = document.getElementById('sticky-aura');
+  const sTag     = document.getElementById('sticky-label-tag');
+  const sName    = document.getElementById('sticky-label-name');
+  const sDots    = document.querySelectorAll('.sticky-dot');
+  const sStage   = document.getElementById('sticky-bottle-stage');
+
+  if(!blocks.length || !sImg) return;
+
+  let activeProd = 'mezcal';
+  let swapping   = false;
+
+  /* ── 3D flip bottle swap ── */
+  function swapBottle(block){
+    const {product,img,aura,tag,name} = block.dataset;
+    if(product === activeProd || swapping) return;
+    activeProd = product;
+    swapping   = true;
+
+    /* Flip OUT */
+    sImg.style.transition = 'transform .22s ease-in, opacity .22s ease-in';
+    sImg.style.transform  = 'perspective(900px) rotateY(85deg) scale(0.88)';
+    sImg.style.opacity    = '0';
+
+    setTimeout(()=>{
+      sImg.src = img;
+      if(sTag)  sTag.textContent  = tag;
+      if(sName) sName.textContent = name;
+
+      /* Snap to opposite side, then animate IN */
+      sImg.style.transition = 'none';
+      sImg.style.transform  = 'perspective(900px) rotateY(-60deg) scale(0.92)';
+      requestAnimationFrame(()=>{
+        requestAnimationFrame(()=>{
+          sImg.style.transition = 'transform .38s ease-out, opacity .32s ease-out';
+          sImg.style.transform  = 'perspective(900px) rotateY(0deg) scale(1)';
+          sImg.style.opacity    = '1';
+          swapping = false;
+        });
+      });
+    }, 220);
+
+    /* Aura color shift */
+    if(sAura){
+      sAura.style.background = aura === 'sakura'
+        ? 'radial-gradient(ellipse 70% 55% at 50% 65%,rgba(212,120,138,.13) 0%,transparent 65%)'
+        : 'radial-gradient(ellipse 70% 55% at 50% 65%,rgba(0,194,160,.07) 0%,transparent 65%)';
+    }
+
+    /* Dot update */
+    const idx = ['mezcal','tequila','1111'].indexOf(product);
+    sDots.forEach((d,i)=> d.classList.toggle('active', i===idx));
+  }
+
+  /* ── IntersectionObserver — activates whichever block is centered ── */
+  const prodObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        blocks.forEach(b=> b.classList.remove('active'));
+        e.target.classList.add('active');
+        swapBottle(e.target);
+      }
+    });
+  }, {threshold:0.45, rootMargin:'-15% 0px -15% 0px'});
+
+  blocks.forEach(b=> prodObs.observe(b));
+
+  /* ── Mouse-tilt on sticky stage ── */
+  if(sStage){
+    sStage.addEventListener('mousemove', e=>{
+      if(swapping) return;
+      const r  = sStage.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width/2)  / (r.width/2);
+      const dy = (e.clientY - r.top  - r.height/2) / (r.height/2);
+      sImg.style.transition = '';
+      sImg.style.transform  = `perspective(900px) rotateY(${dx*14}deg) rotateX(${-dy*8}deg) scale(1.04)`;
+      sImg.style.filter     = `drop-shadow(${-dx*16}px 24px 50px rgba(0,0,0,.7)) drop-shadow(0 0 30px rgba(0,194,160,.06))`;
+    });
+    sStage.addEventListener('mouseleave', ()=>{
+      sImg.style.transition = 'transform .5s ease, filter .4s ease';
+      sImg.style.transform  = 'perspective(900px) rotateY(0) rotateX(0) scale(1)';
+      sImg.style.filter     = 'drop-shadow(0 24px 60px rgba(0,0,0,.85))';
+    });
+  }
+
+  /* ── Dot navigation ── */
+  sDots.forEach((dot, i)=>{
+    dot.addEventListener('click', ()=>{
+      blocks[i].scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  });
+})();
+</script>
+</body>
+</html>
