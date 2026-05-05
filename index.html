@@ -1644,7 +1644,7 @@ document.addEventListener('keydown',e=>{
     swapping   = true;
 
     /* Flip OUT */
-    sImg.style.transition = 'transform .22s ease-in, opacity .22s ease-in';
+    sImg.style.transition = 'transform .12s ease-in, opacity .12s ease-in';
     sImg.style.transform  = 'perspective(900px) rotateY(85deg) scale(0.88)';
     sImg.style.opacity    = '0';
 
@@ -1658,13 +1658,13 @@ document.addEventListener('keydown',e=>{
       sImg.style.transform  = 'perspective(900px) rotateY(-60deg) scale(0.92)';
       requestAnimationFrame(()=>{
         requestAnimationFrame(()=>{
-          sImg.style.transition = 'transform .38s ease-out, opacity .32s ease-out';
+          sImg.style.transition = 'transform .20s ease-out, opacity .18s ease-out';
           sImg.style.transform  = 'perspective(900px) rotateY(0deg) scale(1)';
           sImg.style.opacity    = '1';
           swapping = false;
         });
       });
-    }, 220);
+    }, 120);
 
     /* Aura color shift */
     if(sAura){
@@ -1687,7 +1687,7 @@ document.addEventListener('keydown',e=>{
         swapBottle(e.target);
       }
     });
-  }, {threshold:0.45, rootMargin:'-15% 0px -15% 0px'});
+  }, {threshold:0.25, rootMargin:'-8% 0px -8% 0px'});
 
   blocks.forEach(b=> prodObs.observe(b));
 
